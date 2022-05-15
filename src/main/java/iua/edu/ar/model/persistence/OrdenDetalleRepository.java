@@ -14,7 +14,7 @@ public interface OrdenDetalleRepository extends JpaRepository<OrdenDetalle, Long
 	List<OrdenDetalle> findAllOrdenDetalleByOrdenId(Long id);
 
 	OrdenDetalle findFirstByOrdenIdOrderByFecha(Long id);
-
+	
 	List<OrdenDetalle> findByOrdenId(Long id);
 
 }

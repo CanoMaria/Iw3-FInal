@@ -139,7 +139,7 @@ public class Orden implements Serializable {
 	 */
 	@ApiModelProperty(notes = "Limite a cargar en el camion", required = false)
 	@Column(length = 100, nullable = true)
-    private int preset;
+    private int preset=0;
 
 	@Column(length = 50, nullable = true, unique = true)
 	private String codigoExterno;

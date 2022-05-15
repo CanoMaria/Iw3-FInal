@@ -31,7 +31,7 @@ public class Camion implements Serializable {
 	private String descripcion;
 
 	@Column(length = 100)
-	private int cisternado;
+	private int[] cisternado;
 
 	@OneToMany(targetEntity = Orden.class, mappedBy = "camion", fetch = FetchType.LAZY)
 	@JsonBackReference
@@ -61,11 +61,11 @@ public class Camion implements Serializable {
 		this.descripcion = descripcion;
 	}
 
-	public int getCisternado() {
+	public int[] getCisternado() {
 		return cisternado;
 	}
 
-	public void setCisternado(int cisternado) {
+	public void setCisternado(int[] cisternado) {
 		this.cisternado = cisternado;
 	}
 

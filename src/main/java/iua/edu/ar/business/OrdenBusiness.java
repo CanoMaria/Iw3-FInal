@@ -63,13 +63,22 @@ public class OrdenBusiness implements IOrdenBusiness {
 	public Orden add(Orden orden) throws BusinessException {
 		System.out.println(orden.toString());
 		try {
-			if (orden.checkBasicData() && orden.getEstado() == 0) {
-				orden.setEstado(1);
-				return ordenDAO.save(orden);
-			}else {
-				throw new BusinessException("Los datos ingresados no son correctos");
+			if(orden.getEstado() == 0) {
+				int [] cisternadoArray=orden.getCamion().getCisternado();
+				int preset=0;
+						
+				for(int i=0;i<cisternadoArray.length;i++){
+					preset+=cisternadoArray[i];
+				}
+				orden.setPreset(preset);
+				
+				if (orden.checkBasicData()) {
+					orden.setEstado(1);
+				}else {
+					throw new BusinessException("Los datos ingresados no son correctos");
+				}
 			}
-
+		return ordenDAO.save(orden);			
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 			throw new BusinessException(e);
@@ -92,14 +101,14 @@ public class OrdenBusiness implements IOrdenBusiness {
 	public Orden update(Orden orden) throws NotFoundException, BusinessException {
 		Orden ordenDB = load(orden.getId());
 
-		ordenDAO.save(ordenDB);
+		//ordenDAO.save(ordenDB);
 
 		// ordenDB.setUltimosDatosCarga(ultimosDatosCarga);
 
-		orden.partialUpdate(ordenDB);
+		/*orden.partialUpdate(ordenDB);
 
 		if (orden.checkBasicData())
-			orden.setEstado(1);
+			orden.setEstado(1);*/
 
 		return ordenDAO.save(orden);
 
@@ -138,11 +147,19 @@ public class OrdenBusiness implements IOrdenBusiness {
 					datosCarga.getCaudal()
 					);
 			ultimosDatosCarga.setFecha(date2);
-			/* Double ultimoDato=ordenDB.getUltimosDatosCarga().getMasaAcumulada();
 			
-			if(ultimoDato!=null && ultimoDato>ultimosDatosCarga.getMasaAcumulada()){
-				throw new BusinessException("Dato Incorrecto");
-			}*/
+			
+			if(ordenDB.getUltimosDatosCarga() != null) {
+				Double masaAcumuladaRegistrada=ordenDB.getUltimosDatosCarga().getMasaAcumulada(); 
+				
+				if(masaAcumuladaRegistrada>ultimosDatosCarga.getMasaAcumulada()){
+					throw new BusinessException("La masa acumulada no puede ser menor");
+				}
+				if(ultimosDatosCarga.getMasaAcumulada()>ordenDB.getPreset()) {
+					throw new BusinessException("La masa acumulada no puede ser mayor al preset");
+				}
+			}
+			
 			
 			ordenDB.setUltimosDatosCarga(ultimosDatosCarga);
 			add(ordenDB);
@@ -157,7 +174,6 @@ public class OrdenBusiness implements IOrdenBusiness {
 			ordenDetalle.setTemperaturaProducto(datosCarga.getTemperaturaProducto());
 			ordenDetalle.setFecha(date2);
 			
-			System.out.println("HOLAAAAA");
 			if (test.isEmpty()) {
 				ordenDetalleDAO.save(ordenDetalle);
 				return;

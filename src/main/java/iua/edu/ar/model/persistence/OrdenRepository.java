@@ -14,5 +14,5 @@ public interface OrdenRepository extends JpaRepository<Orden, Long> {
 
 	
 	@Query(nativeQuery = true)
-	public PromedioDatoCarga findPromedios(@Param("id") long idOrden);
+	public PromedioDatoCarga findPromedios(@Param("id") long idOrden);	
 }

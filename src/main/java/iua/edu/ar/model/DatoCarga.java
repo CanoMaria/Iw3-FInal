@@ -54,7 +54,7 @@ public class DatoCarga implements Serializable {
 	protected Date fecha;
 
 	@Column(length = 100)
-	protected Double masaAcumulada;
+	protected Double masaAcumulada=0.0;
 
 	@Column(length = 100)
 	protected Double densidadProducto;
