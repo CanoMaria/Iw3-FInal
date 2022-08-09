@@ -37,7 +37,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.antMatchers("/logout*").permitAll()
 			.anyRequest().authenticated()
 			.and()
-			.httpBasic();	
+			//httpBasic();
+			.formLogin()
+			.loginPage("/login.html")
+			.loginProcessingUrl("/dologin")
+			.defaultSuccessUrl("/index.html")
+			.failureUrl("/login.html?error=true")
+			.and()
+			.logout()
+			.deleteCookies("JSESSIONID")
+			.logoutSuccessUrl("/login.html");
+			
 	}
 
 }
