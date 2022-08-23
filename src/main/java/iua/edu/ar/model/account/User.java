@@ -1,4 +1,4 @@
-package iua.edu.ar.model;
+package iua.edu.ar.model.account;
 
 import java.io.Serializable;
 import java.util.ArrayList;
