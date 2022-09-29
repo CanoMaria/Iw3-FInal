@@ -28,7 +28,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Entity
 @Table(name = "users")
-public class User implements Serializable, UserDetails {
+public class User implements UserDetails, Serializable {
 
 	private static final long serialVersionUID = 7687287245581692665L;
 
