@@ -17,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
-@ApiModel(value = "Producto", description = "Combustible a cargarse")
+@ApiModel(value = "Producto", description = "Esta clase representa al combustible ingresado al camion")
 @Entity
 @Table(name = "productos")
 public class Producto implements Serializable {
