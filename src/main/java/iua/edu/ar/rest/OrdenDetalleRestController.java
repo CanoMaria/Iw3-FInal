@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import iua.edu.ar.business.IOrdenBusiness;
 import iua.edu.ar.business.IOrdenDetalleBusiness;
 import iua.edu.ar.business.exception.BusinessException;
@@ -29,13 +31,15 @@ import iua.edu.ar.model.OrdenDetalle;
 
 @RestController
 @RequestMapping(value = Constantes.URL_ORDENES_DETALLES)
+@Api(value = "Orden-Detalle", description = "Operaciones sobre el detalle de las ordenes", tags = { "Orden-Detalle" })
 public class OrdenDetalleRestController {
 	
 	private Logger log = LoggerFactory.getLogger(this.getClass());
 
 	@Autowired
 	private IOrdenDetalleBusiness ordenDetalleBusiness;
-
+	
+	@ApiOperation(value="Obtener el detalle de una orden mediante el ID")
 	@GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<OrdenDetalle> load(@PathVariable("id") Long id) {
 
@@ -48,7 +52,8 @@ public class OrdenDetalleRestController {
 			return new ResponseEntity<OrdenDetalle>(HttpStatus.NOT_FOUND);
 		}
 	}
-
+	
+	@ApiOperation(value="Obtener una lista de todos los detalles de orden que existen")
 	@GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<OrdenDetalle>> list() {
 		try {
@@ -61,7 +66,8 @@ public class OrdenDetalleRestController {
 		}
 
 	}
-
+	
+	@ApiOperation(value="Guardar un nuevo detalle de orden")
 	@PostMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> add(@RequestBody OrdenDetalle ordenDetalle) {
 		try {
@@ -74,7 +80,8 @@ public class OrdenDetalleRestController {
 			return new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-
+	
+	@ApiOperation(value="Actualizar el detalle de una orden")
 	@PutMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> update(@RequestBody OrdenDetalle ordenDetalle) {
 		try {
@@ -91,7 +98,8 @@ public class OrdenDetalleRestController {
 		}
 		return new ResponseEntity<String>(HttpStatus.OK);
 	}
-
+	
+	@ApiOperation(value="Borrar el detalle de una orden")
 	@DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> delete(@PathVariable("id") Long id) {
 		try {
