@@ -60,18 +60,29 @@ public class OrdenBusiness implements IOrdenBusiness {
 	}
 
 	@Override
+	/**
+	 * Funcion para cargar una nueva Orden
+	 * 
+	 * @param orden    Todos los datos de la nueva orden
+	 
+	 */
 	public Orden add(Orden orden) throws BusinessException {
 		System.out.println(orden.toString());
 		try {
+			//Verificamos que este en estado 0
 			if(orden.getEstado() == 0) {
+				//obtenemos el cisternado del camnion
 				int [] cisternadoArray=orden.getCamion().getCisternado();
 				int preset=0;
-						
+					
+				//Calculamos el tamanio del preset
 				for(int i=0;i<cisternadoArray.length;i++){
 					preset+=cisternadoArray[i];
 				}
+				//Guardamos el limite del preset
 				orden.setPreset(preset);
 				
+				//Si todos lo datos son correctos, guardamos en estado 1
 				if (orden.checkBasicData()) {
 					orden.setEstado(1);
 				}else {
@@ -135,56 +146,72 @@ public class OrdenBusiness implements IOrdenBusiness {
 	public void cargaDatos(DatoCarga datosCarga, Long idOrden) throws NotFoundException, BusinessException {
 		Orden ordenDB;
 		try {
+			//Cargamos la orden desde la BD
 			ordenDB = load(idOrden);
+			
+			//Verificamos que la misma este en el estado correcto (osea el 2)
 			if (ordenDB.getEstado() != 2)
 				throw new BusinessException("Estado incorrecto");
 			
-			Date date2 = new Date();
+			//Cargamos la Fecha actual
+			Date actualDate = new Date();
+			
+			//----Actualizamos el registro de "Ultimo dato cargado"---
+			//Cargamos el ultimo registro almacenado
 			UltimoDatoCarga ultimosDatosCarga = new UltimoDatoCarga(
 					datosCarga.getMasaAcumulada(),
 					datosCarga.getDensidadProducto(), 
 					datosCarga.getTemperaturaProducto(), 
 					datosCarga.getCaudal()
 					);
-			ultimosDatosCarga.setFecha(date2);
 			
+			//Seteamos que como ultimo dato de carga es la fecha actual
+			ultimosDatosCarga.setFecha(actualDate);
 			
+			//Si no existia ningun registro de carga anterior (osea es este el 1er registro)
 			if(ordenDB.getUltimosDatosCarga() != null) {
 				Double masaAcumuladaRegistrada=ordenDB.getUltimosDatosCarga().getMasaAcumulada(); 
 				
+				//Verificamos que la masa actual acumulada sea efectivamente mayor 
 				if(masaAcumuladaRegistrada>ultimosDatosCarga.getMasaAcumulada()){
 					throw new BusinessException("La masa acumulada no puede ser menor");
 				}
+				//Verificamos que la masa acumulada no sea mayor al preset (no deberia ocurrir)
 				if(ultimosDatosCarga.getMasaAcumulada()>ordenDB.getPreset()) {
 					throw new BusinessException("La masa acumulada no puede ser mayor al preset");
 				}
 			}
 			
-			
+			//Guardamos este registro como el ultimo
 			ordenDB.setUltimosDatosCarga(ultimosDatosCarga);
 			add(ordenDB);
 			
-			List<OrdenDetalle> test = ordenDetalleDAO.findByOrdenId(idOrden);
-			
+			//----Actualizamos el registro de "Orden Detalle---
+			//Generamos un nuevo orden detalle y almacenamos los datos nuevos
 			OrdenDetalle ordenDetalle = new OrdenDetalle();
 			ordenDetalle.setCaudal(datosCarga.getCaudal());
 			ordenDetalle.setDensidadProducto(datosCarga.getDensidadProducto());
 			ordenDetalle.setMasaAcumulada(datosCarga.getMasaAcumulada());
 			ordenDetalle.setOrden(ordenDB);
 			ordenDetalle.setTemperaturaProducto(datosCarga.getTemperaturaProducto());
-			ordenDetalle.setFecha(date2);
+			ordenDetalle.setFecha(actualDate);
 			
-			if (test.isEmpty()) {
+			//Buscamos la lista de ordenes detalle por el Id de orden
+			List<OrdenDetalle> orderDetailListByOrderId = ordenDetalleDAO.findByOrdenId(idOrden);
+			
+			//Verificamos que exista algun detalle de orden, caso contrario la guardamos como nueva
+			if (orderDetailListByOrderId.isEmpty()) {
 				ordenDetalleDAO.save(ordenDetalle);
 				return;
 			}
 			
-			OrdenDetalle test2 = ordenDetalleDAO.findFirstByOrdenIdOrderByFecha(idOrden);
-			Date date1 = test2.getFecha();
+			//En caso de que exista algun detalle de orden anterior lo cargamos y filtramos por la mas reciente
+			OrdenDetalle oldOrderDetail = ordenDetalleDAO.findFirstByOrdenIdOrderByFecha(idOrden);
+			Date oldDate = oldOrderDetail.getFecha();
 			
-			
-			System.out.println(date1+"-------"+date2);
-			long segundos = getDateDiff(date1, date2, TimeUnit.SECONDS);
+			//Calculamos la diferencia y solo almacenamos el detalle de orden que sea superior a la frecuencia de guardado
+			System.out.println(oldDate+"-------"+actualDate);
+			long segundos = getDateDiff(oldDate, actualDate, TimeUnit.SECONDS);
 			if (segundos >= ordenDB.getFecuencia()) {
 				ordenDetalleDAO.save(ordenDetalle);
 			}
@@ -203,13 +230,13 @@ public class OrdenBusiness implements IOrdenBusiness {
 	/**
 	 * Get a diff between two dates
 	 * 
-	 * @param date1    the oldest date
-	 * @param date2    the newest date
+	 * @param oldDate    the oldest date
+	 * @param actualDate    the newest date
 	 * @param timeUnit the unit in which you want the diff
 	 * @return the diff value, in the provided unit
 	 */
-	public static long getDateDiff(Date date1, Date date2, TimeUnit timeUnit) {
-		long diffInMillies = date2.getTime() - date1.getTime();
+	public static long getDateDiff(Date oldDate, Date actualDate, TimeUnit timeUnit) {
+		long diffInMillies = actualDate.getTime() - oldDate.getTime();
 		return timeUnit.convert(diffInMillies, TimeUnit.MILLISECONDS);
 	}
 
