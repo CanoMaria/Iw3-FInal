@@ -39,22 +39,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http
 			.csrf().disable()
 			.authorizeRequests()
-			.antMatchers("/admin/**").hasRole("ADMIN")
-			.antMatchers("/anonymous*").anonymous()
-			.antMatchers("/login*").permitAll()
-			.antMatchers("/logout*").permitAll()
-			.anyRequest().authenticated()
-			.and()
-			//httpBasic();
-			.formLogin()
-			.loginPage("/login.html")
-			.loginProcessingUrl("/dologin")
-			.defaultSuccessUrl("/index.html")
-			.failureUrl("/login.html?error=true")
-			.and()
-			.logout()
-			.deleteCookies("JSESSIONID")
-			.logoutSuccessUrl("/login.html");
+
+			.antMatchers("/v2/api-docs").permitAll()
+			.antMatchers("/configuration/ui").permitAll()
+			.antMatchers("/swagger-resources/**").permitAll()
+			.antMatchers("/configuration/security").permitAll()
+			.antMatchers("/swagger-ui.html").permitAll()
+			.antMatchers("/swagger-ui/*").permitAll()
+			.antMatchers("/webjars/**").permitAll()
+			//.antMatchers(HttpMethod.POST, "/login*").permitAll()
+			.antMatchers("/index.html").permitAll()
+			.antMatchers("/favicon.png").permitAll()
+			.antMatchers("/ui/**").permitAll()
+			.antMatchers("/").permitAll()
+			// .antMatchers("/productos*").permitAll();
+			// //.hasRole("ADMIN");
+			.antMatchers("/test*").hasAnyRole("ADMIN", "USER");
 			
 	}
 
