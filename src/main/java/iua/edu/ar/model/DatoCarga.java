@@ -14,6 +14,10 @@ import javax.persistence.Temporal;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
+@ApiModel(value = "DatoCarga", description = "Esta clase representa la carga continua de combustible en el camion")
 @Entity
 @Inheritance(strategy=InheritanceType.JOINED)
 public class DatoCarga implements Serializable {
@@ -53,18 +57,21 @@ public class DatoCarga implements Serializable {
 	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
 	protected Date fecha;
 
+    @ApiModelProperty(notes = "Peso del combustible cargado", example = "50", required = true)
 	@Column(length = 100)
 	protected Double masaAcumulada=0.0;
 
+    @ApiModelProperty(notes = "Densidad del combustible", example = "0,567", required = true)
 	@Column(length = 100)
 	protected Double densidadProducto;
 
+    @ApiModelProperty(notes = "Temperatura del combustible (°C).", example = "16", required = true)
 	@Column(length = 100)
 	protected Double temperaturaProducto;
 
+    @ApiModelProperty(notes = "Cantidad de combustible cargado por segundo", example = "0,54", required = true)
 	@Column(length = 100)
 	protected Double caudal;
-	
 	
 	/*
 	 * GETTERS AND SETTERS

@@ -16,8 +16,10 @@ import javax.persistence.Temporal;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
+@ApiModel(value = "OrdenDetalle", description = "Esta clase representa el detalle de la orden")
 @Entity
 @Table(name = "orden_detalle")
 public class OrdenDetalle implements Serializable {

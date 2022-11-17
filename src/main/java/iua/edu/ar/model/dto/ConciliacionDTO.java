@@ -2,6 +2,7 @@ package iua.edu.ar.model.dto;
 
 import java.io.Serializable;
 
+import io.swagger.annotations.ApiModelProperty;
 import iua.edu.ar.model.PromedioDatoCarga;
 import iua.edu.ar.model.UltimoDatoCarga;
 
@@ -21,41 +22,30 @@ public class ConciliacionDTO implements Serializable {
         this.diferenciaEntreBalanzaCaudalímetro = netoPorBalanza - productoCargado;
     }
 
+    @ApiModelProperty(notes = "Peso inicial del camion en kg", example = "2000")
     private Double pesoInicial;
 
+    @ApiModelProperty(notes = "Peso final del camion en kg", example = "6000")
     private Double pesoFinal;
 
+    @ApiModelProperty(notes = "Peso del camión vacío mas el peso final de la carga (kg).", example = "6000")
     private Double productoCargado;
 
+    @ApiModelProperty(notes = "(Peso final - Peso Inicial) del camion .", example = "6000")
     private Double netoPorBalanza;
 
+    @ApiModelProperty(notes = "Peso del camión vacío mas el peso final de la carga (kg).", example = "6000")
     private Double diferenciaEntreBalanzaCaudalímetro;
 
+    @ApiModelProperty(notes = "Promedio de la temperatura del combustible en °C", example = "20")
     private Double promedioTemperatura;
 
+    @ApiModelProperty(notes = "Promedio de la densidad del combustible", example = "0.56")
     private Double promedioDensidad;
 
+    @ApiModelProperty(notes = "Promedio del caudal del combustible cargado cada segundo litro/segundo", example = "0.15")
     private Double promedioCaudal;
 
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
 	public Double getPesoInicial() {
 		return pesoInicial;

@@ -14,6 +14,10 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
+@ApiModel(value = "Camion", description = "Clase que representa al camion que se llenara de combustible")
 @Entity
 @Table(name = "camiones")
 public class Camion implements Serializable {
@@ -24,15 +28,19 @@ public class Camion implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
-	@Column(length = 100)
+    @ApiModelProperty(notes = "Patente del camion", example = "AFY23CD", required = true)
+	@Column(length = 100, nullable = false, unique = true)
 	private String patente;
 
+    @ApiModelProperty(notes = "Descripcion del camion", example = "Camion de transporte")
 	@Column(length = 100, nullable = true)
 	private String descripcion;
-
-	@Column(length = 100)
+    
+    @ApiModelProperty(notes = "Capacidad de combustible", example = "100", required = true)
+	@Column(length = 100, nullable = false)
 	private int[] cisternado;
 
+    @ApiModelProperty(notes = "Ordenes que puede generar el camion a la hora de cargar combustible")
 	@OneToMany(targetEntity = Orden.class, mappedBy = "camion", fetch = FetchType.LAZY)
 	@JsonBackReference
 	private List<Orden> ordenList;
