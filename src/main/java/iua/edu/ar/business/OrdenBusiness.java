@@ -3,7 +3,17 @@ package iua.edu.ar.business;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.Properties;
 import java.util.concurrent.TimeUnit;
+
+import java.util.Properties;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -60,18 +70,29 @@ public class OrdenBusiness implements IOrdenBusiness {
 	}
 
 	@Override
+	/**
+	 * Funcion para cargar una nueva Orden
+	 * 
+	 * @param orden    Todos los datos de la nueva orden
+	 
+	 */
 	public Orden add(Orden orden) throws BusinessException {
 		System.out.println(orden.toString());
 		try {
+			//Verificamos que este en estado 0
 			if(orden.getEstado() == 0) {
+				//obtenemos el cisternado del camnion
 				int [] cisternadoArray=orden.getCamion().getCisternado();
 				int preset=0;
-						
+					
+				//Calculamos el tamanio del preset
 				for(int i=0;i<cisternadoArray.length;i++){
 					preset+=cisternadoArray[i];
 				}
+				//Guardamos el limite del preset
 				orden.setPreset(preset);
 				
+				//Si todos lo datos son correctos, guardamos en estado 1
 				if (orden.checkBasicData()) {
 					orden.setEstado(1);
 				}else {
@@ -135,56 +156,74 @@ public class OrdenBusiness implements IOrdenBusiness {
 	public void cargaDatos(DatoCarga datosCarga, Long idOrden) throws NotFoundException, BusinessException {
 		Orden ordenDB;
 		try {
+			//Cargamos la orden desde la BD
 			ordenDB = load(idOrden);
+			
+			//Verificamos que la misma este en el estado correcto (osea el 2)
 			if (ordenDB.getEstado() != 2)
 				throw new BusinessException("Estado incorrecto");
 			
-			Date date2 = new Date();
+			//Cargamos la Fecha actual
+			Date actualDate = new Date();
+			
+			//----Actualizamos el registro de "Ultimo dato cargado"---
+			//Cargamos el ultimo registro almacenado
 			UltimoDatoCarga ultimosDatosCarga = new UltimoDatoCarga(
 					datosCarga.getMasaAcumulada(),
 					datosCarga.getDensidadProducto(), 
 					datosCarga.getTemperaturaProducto(), 
 					datosCarga.getCaudal()
 					);
-			ultimosDatosCarga.setFecha(date2);
 			
+			//Seteamos que como ultimo dato de carga es la fecha actual
+			ultimosDatosCarga.setFecha(actualDate);
 			
+			//Si no existia ningun registro de carga anterior (osea es este el 1er registro)
 			if(ordenDB.getUltimosDatosCarga() != null) {
 				Double masaAcumuladaRegistrada=ordenDB.getUltimosDatosCarga().getMasaAcumulada(); 
 				
+				//Verificamos que la masa actual acumulada sea efectivamente mayor 
 				if(masaAcumuladaRegistrada>ultimosDatosCarga.getMasaAcumulada()){
 					throw new BusinessException("La masa acumulada no puede ser menor");
 				}
+				//Verificamos que la masa acumulada no sea mayor al preset (no deberia ocurrir)
 				if(ultimosDatosCarga.getMasaAcumulada()>ordenDB.getPreset()) {
 					throw new BusinessException("La masa acumulada no puede ser mayor al preset");
 				}
 			}
 			
-			
+			//Guardamos este registro como el ultimo
 			ordenDB.setUltimosDatosCarga(ultimosDatosCarga);
 			add(ordenDB);
 			
-			List<OrdenDetalle> test = ordenDetalleDAO.findByOrdenId(idOrden);
-			
+			//----Actualizamos el registro de "Orden Detalle---
+			//Generamos un nuevo orden detalle y almacenamos los datos nuevos
 			OrdenDetalle ordenDetalle = new OrdenDetalle();
 			ordenDetalle.setCaudal(datosCarga.getCaudal());
 			ordenDetalle.setDensidadProducto(datosCarga.getDensidadProducto());
 			ordenDetalle.setMasaAcumulada(datosCarga.getMasaAcumulada());
 			ordenDetalle.setOrden(ordenDB);
 			ordenDetalle.setTemperaturaProducto(datosCarga.getTemperaturaProducto());
-			ordenDetalle.setFecha(date2);
+			ordenDetalle.setFecha(actualDate);
 			
-			if (test.isEmpty()) {
+			verifyTemperature(datosCarga.getTemperaturaProducto());
+			
+			//Buscamos la lista de ordenes detalle por el Id de orden
+			List<OrdenDetalle> orderDetailListByOrderId = ordenDetalleDAO.findByOrdenId(idOrden);
+			
+			//Verificamos que exista algun detalle de orden, caso contrario la guardamos como nueva
+			if (orderDetailListByOrderId.isEmpty()) {
 				ordenDetalleDAO.save(ordenDetalle);
 				return;
 			}
 			
-			OrdenDetalle test2 = ordenDetalleDAO.findFirstByOrdenIdOrderByFecha(idOrden);
-			Date date1 = test2.getFecha();
+			//En caso de que exista algun detalle de orden anterior lo cargamos y filtramos por la mas reciente
+			OrdenDetalle oldOrderDetail = ordenDetalleDAO.findFirstByOrdenIdOrderByFecha(idOrden);
+			Date oldDate = oldOrderDetail.getFecha();
 			
-			
-			System.out.println(date1+"-------"+date2);
-			long segundos = getDateDiff(date1, date2, TimeUnit.SECONDS);
+			//Calculamos la diferencia y solo almacenamos el detalle de orden que sea superior a la frecuencia de guardado
+			System.out.println(oldDate+"-------"+actualDate);
+			long segundos = getDateDiff(oldDate, actualDate, TimeUnit.SECONDS);
 			if (segundos >= ordenDB.getFecuencia()) {
 				ordenDetalleDAO.save(ordenDetalle);
 			}
@@ -199,17 +238,84 @@ public class OrdenBusiness implements IOrdenBusiness {
 		return;
 
 	}
+	
+	int temperatureLimit=50;
+	public void verifyTemperature(Double temperature) {
+		//Verificamos que la temperatura no sea mayor a lo permitido
+		if(temperature>temperatureLimit) {
+			
+			// Recipient's email ID needs to be mentioned.
+	        String to = "ayecano98@gmail.com";
 
+	        // Sender's email ID needs to be mentioned
+	        String from = "iw3final@gmail.com";
+
+	        // Assuming you are sending email from through gmails smtp
+	        String host = "smtp.gmail.com";
+
+	        // Get system properties
+	        Properties properties = System.getProperties();
+
+	        // Setup mail server
+	        properties.put("mail.smtp.host", host);
+	        properties.put("mail.smtp.port", "465");
+	        properties.put("mail.smtp.ssl.enable", "true");
+	        properties.put("mail.smtp.auth", "true");
+
+	        // Get the Session object.// and pass username and password
+	        Session session = Session.getInstance(properties, new javax.mail.Authenticator() {
+
+	            protected PasswordAuthentication getPasswordAuthentication() {
+
+	                return new PasswordAuthentication("iw3final@gmail.com", "iw3Final2022.");
+
+	            }
+
+	        });
+
+	        // Used to debug SMTP issues
+	        session.setDebug(true);
+
+	        try {
+	            // Create a default MimeMessage object.
+	            MimeMessage message = new MimeMessage(session);
+
+	            // Set From: header field of the header.
+	            message.setFrom(new InternetAddress(from));
+
+	            // Set To: header field of the header.
+	            message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
+
+	            // Set Subject: header field
+	            message.setSubject("This is the Subject Line!");
+
+	            // Now set the actual message
+	            message.setContent(
+	                    "<h1>Holaaa desde tu server de Web 3</h1>",
+	                   "text/html");
+
+	            System.out.println("sending...");
+	            // Send message
+	            Transport.send(message);
+	            System.out.println("Sent message successfully....");
+	        } catch (MessagingException mex) {
+	            mex.printStackTrace();
+	        }
+			
+		}
+	}
+	
+	
 	/**
 	 * Get a diff between two dates
 	 * 
-	 * @param date1    the oldest date
-	 * @param date2    the newest date
+	 * @param oldDate    the oldest date
+	 * @param actualDate    the newest date
 	 * @param timeUnit the unit in which you want the diff
 	 * @return the diff value, in the provided unit
 	 */
-	public static long getDateDiff(Date date1, Date date2, TimeUnit timeUnit) {
-		long diffInMillies = date2.getTime() - date1.getTime();
+	public static long getDateDiff(Date oldDate, Date actualDate, TimeUnit timeUnit) {
+		long diffInMillies = actualDate.getTime() - oldDate.getTime();
 		return timeUnit.convert(diffInMillies, TimeUnit.MILLISECONDS);
 	}
 
