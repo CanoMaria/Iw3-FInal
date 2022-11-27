@@ -34,7 +34,7 @@ public class CamionRestController {
 
 	@ApiOperation(value="Obtener un camion mediante el ID")
 	@GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Camion> load(@ApiParam(value = "El ID del producto que se desea obtener")@PathVariable("id") Long id) {
+	public ResponseEntity<Camion> load(@ApiParam(value = "El ID del camion que se desea obtener")@PathVariable("id") Long id) {
 
 		try {
 			return new ResponseEntity<Camion>(camionBusiness.load(id), HttpStatus.OK);
@@ -50,7 +50,7 @@ public class CamionRestController {
 	@GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Camion>> list() {
 		try {
-			log.debug("GetMapping: Una lista de productos ");
+			log.debug("GetMapping: Una lista de camiones ");
 			return new ResponseEntity<List<Camion>>(camionBusiness.list(), HttpStatus.OK);
 
 		} catch (BusinessException e) {
