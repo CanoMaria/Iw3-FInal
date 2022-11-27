@@ -10,14 +10,20 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.annotations.Api;
 import iua.edu.ar.business.exception.BusinessException;
 import iua.edu.ar.business.exception.FoundException;
 import iua.edu.ar.business.exception.NotFoundException;
 import iua.edu.ar.model.account.IUserBusiness;
 import iua.edu.ar.model.account.User;
 
+@RestController
+@RequestMapping(value = Constantes.URL_LOGIN)
+@Api(value = "Login", description = "Operaciones relacionadas con el login", tags = { "Login" })
 public class LoginRestController extends BaseRestController {
 
 	private Logger log = LoggerFactory.getLogger(this.getClass());
@@ -28,7 +34,7 @@ public class LoginRestController extends BaseRestController {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
-	@PostMapping(value = "/login")
+	@PostMapping(value = "")
 	public ResponseEntity<String> loginToken(@RequestParam(value = "username") String username,
 			@RequestParam(value = "password") String password) {
 		try {

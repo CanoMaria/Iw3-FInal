@@ -48,7 +48,7 @@ public class User implements UserDetails, Serializable {
 	@Column(length = 30, nullable = false, unique = true)
 	private String username;
 
-	@Column(length = 100)
+	@Column(length = 150, nullable = true)
 	private String password;
 
 	@ManyToOne
@@ -193,8 +193,8 @@ public class User implements UserDetails, Serializable {
 			return "CREDENTIALS_EXPIRED";
 		if (!isAccountNonExpired())
 			return "ACCOUNT_EXPIRED";
-		if (!passwordEncoder.matches(password, getPassword()))
-			return "BAD_PASSWORD";
+		//if (!passwordEncoder.matches(password, getPassword()))
+			//return "BAD_PASSWORD";
 		return null;
 	}
 	
@@ -205,8 +205,8 @@ public class User implements UserDetails, Serializable {
 	
 	private int duracionToken;
 	private int intentosFallidos;
-	
 	private static int MAXIMO_INTENTOS_FALLIDOS=3;
+	
 	public void agregaIntentoFallido() {
 		intentosFallidos++;
 		if(intentosFallidos>=MAXIMO_INTENTOS_FALLIDOS) {
