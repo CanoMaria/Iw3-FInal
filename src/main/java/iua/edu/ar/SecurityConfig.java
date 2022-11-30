@@ -104,7 +104,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests().antMatchers(AUTH_WHITELIST).permitAll();
 		
 
-		http.authorizeRequests().anyRequest().authenticated();
+//		http.authorizeRequests().anyRequest().authenticated();
 
 		http.addFilterAfter(new CustomTokenAuthenticationFilter(authTokenBusiness, userBusiness),
 				UsernamePasswordAuthenticationFilter.class);
