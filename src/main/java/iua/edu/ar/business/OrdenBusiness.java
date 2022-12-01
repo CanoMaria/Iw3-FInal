@@ -3,7 +3,16 @@ package iua.edu.ar.business;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.Properties;
 import java.util.concurrent.TimeUnit;
+
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -81,6 +90,8 @@ public class OrdenBusiness implements IOrdenBusiness {
 				}
 				//Guardamos el limite del preset
 				orden.setPreset(preset);
+				//Guardamos el id de la orden en la alerta
+				orden.getAlerta().setOrden(orden);
 				
 				//Si todos lo datos son correctos, guardamos en estado 1
 				if (orden.checkBasicData()) {
@@ -196,6 +207,10 @@ public class OrdenBusiness implements IOrdenBusiness {
 			ordenDetalle.setTemperaturaProducto(datosCarga.getTemperaturaProducto());
 			ordenDetalle.setFecha(actualDate);
 			
+			//Funcion que verifica la temperatura y envia un mail en caso de alerta
+			verifyTemperature(datosCarga.getTemperaturaProducto(),idOrden);
+			
+			
 			//Buscamos la lista de ordenes detalle por el Id de orden
 			List<OrdenDetalle> orderDetailListByOrderId = ordenDetalleDAO.findByOrdenId(idOrden);
 			
@@ -227,6 +242,73 @@ public class OrdenBusiness implements IOrdenBusiness {
 
 	}
 
+	int temperatureLimit=50;
+	public void verifyTemperature(Double temperature,Long idOrden) {
+		
+		//para mas info ver:https://netcorecloud.com/tutorials/send-email-in-java-using-gmail-smtp/
+		//Verificamos que la temperatura no sea mayor a lo permitido
+		if(temperature>temperatureLimit) {
+			
+			// Recipient's email ID needs to be mentioned.
+	        String to = "ayecano98@gmail.com";
+
+	        // Sender's email ID needs to be mentioned
+	        String from = "mcano596@alumnos.iua.edu.ar";
+
+	        // Assuming you are sending email from through gmails smtp
+	        String host = "smtp.gmail.com";
+
+	        // Get system properties
+	        Properties properties = System.getProperties();
+
+	        // Setup mail server
+	        properties.put("mail.smtp.host", host);
+	        properties.put("mail.smtp.port", "465");
+	        properties.put("mail.smtp.ssl.enable", "true");
+	        properties.put("mail.smtp.auth", "true");
+
+	        // Get the Session object.// and pass username and password
+	        Session session = Session.getInstance(properties, new javax.mail.Authenticator() {
+
+	            protected PasswordAuthentication getPasswordAuthentication() {
+
+	                return new PasswordAuthentication("mcano596@alumnos.iua.edu.ar", "******");
+
+	            }
+
+	        });
+
+	        // Used to debug SMTP issues
+	        session.setDebug(true);
+
+	        try {
+	            // Create a default MimeMessage object.
+	            MimeMessage message = new MimeMessage(session);
+
+	            // Set From: header field of the header.
+	            message.setFrom(new InternetAddress(from));
+
+	            // Set To: header field of the header.
+	            message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
+
+	            // Set Subject: header field
+	            message.setSubject("Alerta de temperatura!");
+
+	            // Now set the actual message
+	            message.setContent(
+	              "<h1>Alerta!! La temperatura actual de la orden: "+idOrden+" es de "+temperature+"C </h1>","text/html");
+	            
+	            System.out.println("sending...");
+	            // Send message
+	            Transport.send(message);
+	            System.out.println("Sent message successfully....");
+	        } catch (MessagingException mex) {
+	            mex.printStackTrace();
+	        }
+			
+		}
+	}
+	
 	/**
 	 * Get a diff between two dates
 	 * 

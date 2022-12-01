@@ -43,19 +43,19 @@ import io.swagger.annotations.ApiModelProperty;
 
 public class Orden implements Serializable {
 
+	private static final long serialVersionUID = -4828422833183668198L;
+	
 	@Override
 	public String toString() {
 		return "Orden [id=" + id + ", fechaRecepcion=" + fechaRecepcion + ", fechaRecepcionPesajeInicial="
 				+ fechaRecepcionPesajeInicial + ", fechaFinCarga=" + fechaFinCarga + ", fechaRecepcionPesajeFinal="
 				+ fechaRecepcionPesajeFinal + ", cliente=" + cliente + ", producto=" + producto + ", camion=" + camion
 				+ ", chofer=" + chofer + ", estado=" + estado + ", ultimosDatosCarga=" + ultimosDatosCarga
-				+ ", promedioDatosCarga=" + promedioDatosCarga + ", password=" + password + ", fecuencia=" + fecuencia
-				+ ", pesoInicial=" + pesoInicial + ", pesoFinal=" + pesoFinal + ", preset=" + preset
-				+ ", codigoExterno=" + codigoExterno + "]";
+				+ ", promedioDatosCarga=" + promedioDatosCarga + ", alerta=" + alerta + ", password=" + password
+				+ ", fecuencia=" + fecuencia + ", pesoInicial=" + pesoInicial + ", pesoFinal=" + pesoFinal + ", preset="
+				+ preset + ", codigoExterno=" + codigoExterno + "]";
 	}
 
-	private static final long serialVersionUID = -4828422833183668198L;
-	
 	@ApiModelProperty(notes = "Identificador de la orden, clave autogenerada", required = false)
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -118,7 +118,11 @@ public class Orden implements Serializable {
 	@OneToOne(cascade =  CascadeType.ALL)
 	private PromedioDatoCarga promedioDatosCarga;
 
-
+  	@ApiModelProperty(notes = "Datos en caso de alerta", required = false)
+  	@JoinColumn(nullable = true)
+	@OneToOne(cascade =  CascadeType.ALL)
+	private Alerta alerta;
+	
 	
 	@ApiModelProperty(notes = "Contraseña autogenerada para cada orden", required = false)
 	@Column(length = 100, nullable = true)
@@ -169,7 +173,10 @@ public class Orden implements Serializable {
 		if(this.getProducto() == null)
 			this.setProducto(ordenDB.getProducto());
 		
+		if(this.getAlerta() == null)
+			this.setAlerta(ordenDB.getAlerta());
 	}
+	
 	
 	public Boolean checkBasicData() {
 		if(this.getCamion() == null) 
@@ -192,7 +199,8 @@ public class Orden implements Serializable {
 		
 		if(this.getProducto() == null)
 			return false;
-		
+		if(this.getAlerta() == null)
+			return false;
 		return true;
 	}
 
@@ -350,5 +358,12 @@ public class Orden implements Serializable {
 	public void setPesoFinal(Double pesoFinal) {
 		this.pesoFinal = pesoFinal;
 	}
-	
+	public Alerta getAlerta() {
+		return alerta;
+	}
+
+	public void setAlerta(Alerta alerta) {
+		this.alerta = alerta;
+	}
+
 }
