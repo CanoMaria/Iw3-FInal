@@ -8,12 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import iua.edu.ar.business.exception.BusinessException;
 import iua.edu.ar.model.account.User;
 import iua.edu.ar.security.AuthToken;
 import iua.edu.ar.security.IAuthTokenBusiness;
-
 
 public class BaseRestController {
 	private Logger log = LoggerFactory.getLogger(this.getClass());
