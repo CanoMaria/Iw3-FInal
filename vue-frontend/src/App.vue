@@ -4,6 +4,8 @@
     <Producto />
     <Chofer />
     <Orden />
+    <Token />
+
   </div>
 </template>
 
@@ -12,8 +14,7 @@ import Camion from './components/Camion.vue'
 import Producto from './components/Producto.vue'
 import Chofer from './components/Chofer.vue'
 import Orden from './components/Orden.vue'
-
-
+import Token from './components/Token.vue'
 
 export default {
   name: 'App',
@@ -21,7 +22,8 @@ export default {
     Camion,
     Producto,
     Chofer,
-    Orden
+    Orden,
+    Token
   }
 }
 </script>
