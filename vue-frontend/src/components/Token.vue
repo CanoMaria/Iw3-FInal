@@ -1,6 +1,6 @@
 <template>
     <button id="id_button_token" @click="getTokens">Solicitar Token</button>
-    
+
         <label for="input_username">Usuario: </label>
         <input type="text" id="input_username" v-model="username">
 
@@ -11,7 +11,6 @@
 
 <script>
 import TokenService from '@/services/TokenService';
-
 
     export default{
         name: '',
