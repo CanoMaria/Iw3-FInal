@@ -6,6 +6,8 @@ import java.util.Optional;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
+import java.util.Properties;
+
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.PasswordAuthentication;
@@ -209,8 +211,7 @@ public class OrdenBusiness implements IOrdenBusiness {
 			
 			//Funcion que verifica la temperatura y envia un mail en caso de alerta
 			verifyTemperature(datosCarga.getTemperaturaProducto(),idOrden);
-			
-			
+					
 			//Buscamos la lista de ordenes detalle por el Id de orden
 			List<OrdenDetalle> orderDetailListByOrderId = ordenDetalleDAO.findByOrdenId(idOrden);
 			
@@ -241,7 +242,6 @@ public class OrdenBusiness implements IOrdenBusiness {
 		return;
 
 	}
-
 	int temperatureLimit=50;
 	public void verifyTemperature(Double temperature,Long idOrden) {
 		
@@ -271,9 +271,7 @@ public class OrdenBusiness implements IOrdenBusiness {
 	        Session session = Session.getInstance(properties, new javax.mail.Authenticator() {
 
 	            protected PasswordAuthentication getPasswordAuthentication() {
-
 	                return new PasswordAuthentication("mcano596@alumnos.iua.edu.ar", "******");
-
 	            }
 
 	        });
@@ -297,7 +295,15 @@ public class OrdenBusiness implements IOrdenBusiness {
 	            // Now set the actual message
 	            message.setContent(
 	              "<h1>Alerta!! La temperatura actual de la orden: "+idOrden+" es de "+temperature+"C </h1>","text/html");
-	            
+	       
+	            message.setSubject("This is the Subject Line!");
+
+	            // Now set the actual message
+	            message.setContent(
+	                    "<h1>Holaaa desde tu server de Web 3</h1>",
+	                   "text/html");
+
+
 	            System.out.println("sending...");
 	            // Send message
 	            Transport.send(message);
