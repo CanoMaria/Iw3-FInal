@@ -25,7 +25,6 @@
 <script>
 import ProductoService from '@/services/ProductoService';
 
-
     export default{
         name: '',
         data(){
