@@ -25,7 +25,9 @@ import org.springframework.stereotype.Service;
 import iua.edu.ar.business.exception.BusinessException;
 import iua.edu.ar.business.exception.NotFoundException;
 import iua.edu.ar.business.exception.PasswordException;
+import iua.edu.ar.model.Alerta;
 import iua.edu.ar.model.DatoCarga;
+import iua.edu.ar.model.EstadoAlerta;
 import iua.edu.ar.model.Orden;
 import iua.edu.ar.model.OrdenDetalle;
 import iua.edu.ar.model.PromedioDatoCarga;
@@ -209,8 +211,23 @@ public class OrdenBusiness implements IOrdenBusiness {
 			ordenDetalle.setTemperaturaProducto(datosCarga.getTemperaturaProducto());
 			ordenDetalle.setFecha(actualDate);
 			
-			//Funcion que verifica la temperatura y envia un mail en caso de alerta
-			verifyTemperature(datosCarga.getTemperaturaProducto(),idOrden);
+			EstadoAlerta noEnviado = EstadoAlerta.NO_ENVIADO;
+			EstadoAlerta enviado = EstadoAlerta.ENVIADO;
+			
+			//Verificamos si ya se envio un mensaje de alerta
+			Alerta ordenAlert=ordenDB.getAlerta();
+			if(ordenAlert.getEstado().equals(noEnviado)) {
+				//Funcion que verifica la temperatura y envia un mail en caso de alerta
+				boolean alertStatus = sendAlarm(datosCarga.getTemperaturaProducto(),idOrden,ordenDB.getAlerta());
+				//Si se detecto una alerta registramos que ya se envio el mail
+				if(alertStatus==true) {
+					ordenAlert.setEstado(enviado);
+					//guardamos el nuevo estado de la alerta
+					ordenDB.setAlerta(ordenAlert);
+					add(ordenDB);
+				}
+			}
+			
 					
 			//Buscamos la lista de ordenes detalle por el Id de orden
 			List<OrdenDetalle> orderDetailListByOrderId = ordenDetalleDAO.findByOrdenId(idOrden);
@@ -242,77 +259,77 @@ public class OrdenBusiness implements IOrdenBusiness {
 		return;
 
 	}
-	int temperatureLimit=50;
-	public void verifyTemperature(Double temperature,Long idOrden) {
-		
+	
+	public boolean sendAlarm(Double temperature,Long idOrden,Alerta alertData) {
+		double temperatureLimit=alertData.getTemperaturaMax();
+		String emailString=alertData.getMail(); //obtenemos un string con formato [mail1,mail2]
+		emailString=emailString.substring(1, emailString.length()-1);
+		String emailArray[]=emailString.split(",");
+				
 		//para mas info ver:https://netcorecloud.com/tutorials/send-email-in-java-using-gmail-smtp/
 		//Verificamos que la temperatura no sea mayor a lo permitido
 		if(temperature>temperatureLimit) {
 			
-			// Recipient's email ID needs to be mentioned.
-	        String to = "ayecano98@gmail.com";
+			for(int i=0;i<emailArray.length;i++) {
+				System.out.println("Email:" +emailArray[i]);
+				// Recipient's email ID needs to be mentioned.
+		        String to = emailArray[i];
 
-	        // Sender's email ID needs to be mentioned
-	        String from = "mcano596@alumnos.iua.edu.ar";
+		        // Sender's email ID needs to be mentioned
+		        String from = "mcano596@alumnos.iua.edu.ar";
 
-	        // Assuming you are sending email from through gmails smtp
-	        String host = "smtp.gmail.com";
+		        // Assuming you are sending email from through gmails smtp
+		        String host = "smtp.gmail.com";
 
-	        // Get system properties
-	        Properties properties = System.getProperties();
+		        // Get system properties
+		        Properties properties = System.getProperties();
 
-	        // Setup mail server
-	        properties.put("mail.smtp.host", host);
-	        properties.put("mail.smtp.port", "465");
-	        properties.put("mail.smtp.ssl.enable", "true");
-	        properties.put("mail.smtp.auth", "true");
+		        // Setup mail server
+		        properties.put("mail.smtp.host", host);
+		        properties.put("mail.smtp.port", "465");
+		        properties.put("mail.smtp.ssl.enable", "true");
+		        properties.put("mail.smtp.auth", "true");
 
-	        // Get the Session object.// and pass username and password
-	        Session session = Session.getInstance(properties, new javax.mail.Authenticator() {
+		        // Get the Session object.// and pass username and password
+		        Session session = Session.getInstance(properties, new javax.mail.Authenticator() {
 
-	            protected PasswordAuthentication getPasswordAuthentication() {
-	                return new PasswordAuthentication("mcano596@alumnos.iua.edu.ar", "******");
-	            }
+		            protected PasswordAuthentication getPasswordAuthentication() {
+		                return new PasswordAuthentication(from, "*******");
+		            }
 
-	        });
+		        });
 
-	        // Used to debug SMTP issues
-	        session.setDebug(true);
+		        // Used to debug SMTP issues
+		        session.setDebug(true);
 
-	        try {
-	            // Create a default MimeMessage object.
-	            MimeMessage message = new MimeMessage(session);
+		        try {
+		            // Create a default MimeMessage object.
+		            MimeMessage message = new MimeMessage(session);
 
-	            // Set From: header field of the header.
-	            message.setFrom(new InternetAddress(from));
+		            // Set From: header field of the header.
+		            message.setFrom(new InternetAddress(from));
 
-	            // Set To: header field of the header.
-	            message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
+		            // Set To: header field of the header.
+		            message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
 
-	            // Set Subject: header field
-	            message.setSubject("Alerta de temperatura!");
+		            // Set Subject: header field
+		            message.setSubject("Alerta de temperatura!");
 
-	            // Now set the actual message
-	            message.setContent(
-	              "<h1>Alerta!! La temperatura actual de la orden: "+idOrden+" es de "+temperature+"C </h1>","text/html");
-	       
-	            message.setSubject("This is the Subject Line!");
-
-	            // Now set the actual message
-	            message.setContent(
-	                    "<h1>Holaaa desde tu server de Web 3</h1>",
-	                   "text/html");
-
-
-	            System.out.println("sending...");
-	            // Send message
-	            Transport.send(message);
-	            System.out.println("Sent message successfully....");
-	        } catch (MessagingException mex) {
-	            mex.printStackTrace();
-	        }
-			
+		            // Now set the actual message
+		            message.setContent(
+		              "<h1>Alerta!! La temperatura actual de la orden: "+idOrden+" es de "+temperature+"C </h1>","text/html");
+		       
+		            System.out.println("sending...");
+		            // Send message
+		            Transport.send(message);
+		            System.out.println("Sent message successfully....");
+		        } catch (MessagingException mex) {
+		            mex.printStackTrace();
+		        }
+			}       
+			return true;
 		}
+		return false;
 	}
 	
 	/**
@@ -323,6 +340,7 @@ public class OrdenBusiness implements IOrdenBusiness {
 	 * @param timeUnit the unit in which you want the diff
 	 * @return the diff value, in the provided unit
 	 */
+	
 	public static long getDateDiff(Date oldDate, Date actualDate, TimeUnit timeUnit) {
 		long diffInMillies = actualDate.getTime() - oldDate.getTime();
 		return timeUnit.convert(diffInMillies, TimeUnit.MILLISECONDS);
