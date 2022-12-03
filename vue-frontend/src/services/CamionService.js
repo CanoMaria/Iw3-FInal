@@ -1,14 +1,11 @@
 import axios from 'axios'
-import TokenService from '@/services/TokenService'
+import LoginService from '@/services/LoginService'
 
 const CAMION_API_BASE_URL = 'http://localhost:8080/api/v1/camiones'
 
-
 class CamionService {
-  async getCamiones() {
+  async getCamiones(token) {
     try {
-      const token = await TokenService.getTokens();
-
 
       const response = await axios.get(CAMION_API_BASE_URL, {
         headers: {

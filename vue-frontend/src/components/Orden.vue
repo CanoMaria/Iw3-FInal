@@ -1,7 +1,4 @@
 <template>
-    <button id="id_button_ordenes" @click="getOrdenes">
-      Listar ordenes
-    </button>
     <div class="container" v-if="ordenes.length>0">
         <h1 class="text-center"> Lista de Ordenes</h1>
         <table class="table table-striped">

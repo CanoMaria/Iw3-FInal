@@ -4,7 +4,7 @@ const LOGIN_API_BASE_URL = 'http://localhost:8080/api/v1/login'
 
 //ASI ESTA BIEN INTENTA NO TOCAR NADA!!!
 
-class TokenService {
+class LoginService {
     async getTokens(username, password) {
       try {
         // Enviar los parámetros en la solicitud POST
@@ -25,4 +25,4 @@ class TokenService {
     }
   }
 
-export default new TokenService()
+export default new LoginService()

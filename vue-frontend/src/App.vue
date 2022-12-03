@@ -1,10 +1,11 @@
 <template>
-  <div id="app">
-    <Camion />
+  <div id="App">
+    <Main_navigator />
+    <!-- <Camion />
     <Producto />
     <Chofer />
     <Orden />
-    <Token />
+    <Login /> -->
 
   </div>
 </template>
@@ -14,16 +15,19 @@ import Camion from './components/Camion.vue'
 import Producto from './components/Producto.vue'
 import Chofer from './components/Chofer.vue'
 import Orden from './components/Orden.vue'
-import Token from './components/Token.vue'
+import Login from './components/Login.vue'
+import Main_navigator from './components/Main_navigator.vue'
+
 
 export default {
   name: 'App',
   components: {
-    Camion,
-    Producto,
-    Chofer,
-    Orden,
-    Token
+    Main_navigator
+    // Camion,
+    // Producto,
+    // Chofer,
+    // Orden,
+    // Login
   }
 }
 </script>

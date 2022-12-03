@@ -1,10 +1,8 @@
 <template>
-    <button id="id_button_camiones" @click="getCamiones">
-        Listar camiones
+    <input id="input_token" type="text" v-model="token" />
+    <button id="id_button_camiones" @click="getCamiones" v-if="requestComplete">
+        Get camiones
     </button>
-    <div>
-        <input id="input_token" type="text" v-model="token"/>
-    </div>
     <div class="container" v-if="camiones.length > 0">
         <h1 class="text-center"> Lista de Camiones</h1>
         <table class="table table-striped">
@@ -31,28 +29,26 @@
 import CamionService from '@/services/CamionService';
 
 // Importar la clase Token
-import TokenService from '@/services/TokenService';
-
-
+import LoginService from '@/services/LoginService';
 
 export default {
     name: '',
-
     data() {
         return {
             camiones: [],
-            token: ''
+            token: '',
+            requestComplete: false, // <-- agrega esta línea
         };
     },
+    // elimina la propiedad computed aquí
     methods: {
         async getCamiones() {
             try {
                 // Obtener un token llamando al método "getTokens" importado
-                //const token = await TokenService.getTokens();
 
                 // Llamar al método "getCamiones" del servicio de camión, pasando el token como un parámetro
-                const camiones = await CamionService.getCamiones(token);
-                this.camiones = camiones;
+                this.camiones = await CamionService.getCamiones(this.token);
+                this.requestComplete = true; // <-- actualiza la variable aquí
             } catch (error) {
                 console.error(error);
             }
@@ -62,8 +58,6 @@ export default {
     // created(){
     //      this.getCamiones()
     // }
-
-
 
 </script>
 

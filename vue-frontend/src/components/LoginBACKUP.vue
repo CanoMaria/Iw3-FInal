@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import TokenService from '@/services/TokenService'
+import LoginService from '@/services/LoginService'
 
 export default {
   name: '',
@@ -42,7 +42,7 @@ export default {
           return;
         }
 
-        this.token = await TokenService.getTokens(this.username, this.password);
+        this.token = await LoginService.getTokens(this.username, this.password);
 
         this.requestComplete = true;
 

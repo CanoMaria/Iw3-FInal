@@ -1,7 +1,5 @@
 <template>
-    <button id="id_button_choferes" @click="getChoferes">
-      Listar choferes
-    </button>
+
     <div class="container" v-if="choferes.length>0">
         <h1 class="text-center"> Lista de Choferes</h1>
         <table class="table table-striped">
