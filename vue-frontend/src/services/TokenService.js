@@ -2,18 +2,27 @@ import axios from 'axios'
 
 const LOGIN_API_BASE_URL = 'http://localhost:8080/api/v1/login'
 
-class TokenService{
-    getTokens(pUsername, pPassword){
-        return axios.post(LOGIN_API_BASE_URL,null, {
+//ASI ESTA BIEN INTENTA NO TOCAR NADA!!!
+
+class TokenService {
+    async getTokens(username, password) {
+      try {
+        // Enviar los parámetros en la solicitud POST
+        const response = await axios.post(LOGIN_API_BASE_URL, {}, {
             params: {
-                username: pUsername,
-                password: pPassword
+              username: username,
+              password: password
             }
-        }).then(response => {
-                console.log(response.data);
-                this.token_generated = response.data
-        });
+          });
+
+        // Devolver el token generado
+        console.log(response.data)
+
+        return response.data;
+      } catch (error) {
+        throw error;
+      }
     }
-}
+  }
 
 export default new TokenService()

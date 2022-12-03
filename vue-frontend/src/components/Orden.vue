@@ -1,5 +1,5 @@
 <template>
-    <button id="id_button_ordenes" @click="getOrdenes" v-if="ordenes.length<=0">
+    <button id="id_button_ordenes" @click="getOrdenes">
       Listar ordenes
     </button>
     <div class="container" v-if="ordenes.length>0">

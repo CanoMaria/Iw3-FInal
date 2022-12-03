@@ -1,5 +1,5 @@
 <template>
-    <button id="id_button_productos" @click="getProductos" v-if="productos.length<=0">
+    <button id="id_button_productos" @click="getProductos">
       Listar productos
     </button>
     <div class="container" v-if="productos.length>0">
