@@ -1,6 +1,7 @@
 <template>
-    <input id="input_token" type="text" v-model="token" />
-    <button id="id_button_camiones" @click="getCamiones" v-if="requestComplete">
+    <div></div>
+    <input id="input_token" type="text" v-model="token" v-if="!requestComplete"/>
+    <button id="id_button_camiones" @click="getCamiones" v-if="!requestComplete">
         Get camiones
     </button>
     <div class="container" v-if="camiones.length > 0">
@@ -21,26 +22,28 @@
                 </tr>
             </tbody>
         </table>
-
     </div>
 </template>
 
 <script>
 import CamionService from '@/services/CamionService';
 
-// Importar la clase Token
-import LoginService from '@/services/LoginService';
-
 export default {
     name: '',
+
     data() {
         return {
             camiones: [],
             token: '',
-            requestComplete: false, // <-- agrega esta línea
+            requestComplete: false,
+
         };
     },
-    // elimina la propiedad computed aquí
+    computed: {
+  requestComplete() {
+    return this.requestComplete;
+  },
+},
     methods: {
         async getCamiones() {
             try {
@@ -48,7 +51,7 @@ export default {
 
                 // Llamar al método "getCamiones" del servicio de camión, pasando el token como un parámetro
                 this.camiones = await CamionService.getCamiones(this.token);
-                this.requestComplete = true; // <-- actualiza la variable aquí
+                this.requestComplete = true;
             } catch (error) {
                 console.error(error);
             }

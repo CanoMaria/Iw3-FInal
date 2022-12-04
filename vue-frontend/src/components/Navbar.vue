@@ -53,8 +53,8 @@
 
 <script>
 import Camion from '@/components/Camion.vue';
-import ChoferService from '@/services/ChoferService';
-import OrdenService from '@/services/OrdenService';
+import Chofer from '@/components/Chofer.vue';
+import Orden from '@/components/Orden.vue';
 
 export default {
     name: "Navbar",
@@ -64,6 +64,6 @@ export default {
             this.$emit("selectComponent", componentName);
         },
     },
-    components: { Camion, ChoferService, OrdenService }
+    components: { Camion, Chofer, Orden }
 };
 </script>
