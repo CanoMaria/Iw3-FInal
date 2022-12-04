@@ -8,9 +8,14 @@
       <Orden v-if="selectedComponent === 'Orden'" /> -->
 
       <component :is="selectedComponent"></component>
-      
+      <footer class="footer"
+        style="position: fixed; bottom: 0; background-color: #333; color: green; width: 100%; padding: 15px; text-align: center;">
+        <a href="http://localhost:8080/swagger-ui/index.html" target="_blank" style="color: white; text-decoration: underline;">Link al Swagger
+          UI</a>
+      </footer>
     </div>
   </div>
+
 </template>
 
 <script>
@@ -19,6 +24,9 @@ import Camion from './Camion.vue';
 import Orden from './Orden.vue';
 import Chofer from './Chofer.vue';
 import Login from './Login.vue';
+import Producto from './Producto.vue';
+
+
 
 export default {
   name: 'MainPage',
@@ -27,7 +35,8 @@ export default {
     Camion,
     Orden,
     Chofer,
-    Login
+    Login,
+    Producto
   },
   data() {
     return {
@@ -36,7 +45,7 @@ export default {
   },
   mounted() {
     // Por defecto, se cargará el componente 1
-     this.selectedComponent = 'Login';
+    this.selectedComponent = 'Login';
   },
   methods: {
     // Esta función se llamará desde la barra de navegación para cambiar el componente cargado
@@ -48,5 +57,11 @@ export default {
 </script>
 
 <style>
-
+footer {
+  background-color: #333;
+  color: #fff;
+  font-size: 16px;
+  margin: 32px 0;
+  padding: 32px;
+}
 </style>

@@ -13,26 +13,39 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item active">
-            <a class="nav-link" href="#" id="navbarDropdown" role="button" 
-              aria-haspopup="true" aria-expanded="false" @click="selectComponent('Camion')">
+            <a class="nav-link" href="#" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false"
+              @click="selectComponent('Login')">
+              Generate Token
+            </a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="#" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false"
+              @click="selectComponent('Camion')">
               Camion
             </a>
           </li>
           <li class="nav-item active">
-            <a class="nav-link" href="#" id="navbarDropdown" role="button" 
-              aria-haspopup="true" aria-expanded="false" @click="selectComponent('Chofer')">
+            <a class="nav-link" href="#" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false"
+              @click="selectComponent('Chofer')">
               Chofer
             </a>
           </li>
 
           <li class="nav-item active">
-            <a class="nav-link" href="#" id="navbarDropdown" role="button" 
-              aria-haspopup="true" aria-expanded="false" @click="selectComponent('Orden')">
+            <a class="nav-link" href="#" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false"
+              @click="selectComponent('Orden')">
               Orden
+            </a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="#" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false"
+              @click="selectComponent('Producto')">
+              Producto
             </a>
           </li>
 
         </ul>
+        
       </div>
     </nav>
 
@@ -52,18 +65,25 @@
 </template> -->
 
 <script>
+import Login from '@/components/Login.vue';
 import Camion from '@/components/Camion.vue';
 import Chofer from '@/components/Chofer.vue';
 import Orden from '@/components/Orden.vue';
+import Producto from '@/components/Producto.vue';
+
 
 export default {
-    name: "Navbar",
-    methods: {
-        // Esta función emitirá un evento para que el componente padre (MainPage) cambie el componente cargado
-        selectComponent(componentName) {
-            this.$emit("selectComponent", componentName);
-        },
+  name: "Navbar",
+  methods: {
+    // Esta función emitirá un evento para que el componente padre (MainPage) cambie el componente cargado
+    selectComponent(componentName) {
+      this.$emit("selectComponent", componentName);
     },
-    components: { Camion, Chofer, Orden }
+  },
+  components: { Login, Camion, Chofer, Orden, Producto }
 };
 </script>
+
+<style>
+
+</style>

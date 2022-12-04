@@ -1,12 +1,13 @@
 <template>
-    <input id="input_token" type="text" v-model="token" />
+    <input id="input_token" type="text" v-model="token" v-if="!requestComplete" />
     <button id="id_button_choferes" @click="getChoferes" v-if="!requestComplete">
         Get choferes
     </button>
 
     <div class="container" v-if="choferes.length > 0">
-        <h1 class="text-center"> Lista de Choferes</h1>
-        <table class="table table-striped">
+        <h1 class="text-center mb-3"> Lista de Choferes</h1>
+
+        <table class="table table-striped table-bordered">
             <thead>
                 <th>Chofer ID</th>
                 <th>Chofer Nombre</th>
@@ -24,8 +25,8 @@
         </table>
     </div>
 </template>
-
 <script>
+
 import ChoferService from '@/services/ChoferService';
 
 export default {
@@ -34,7 +35,7 @@ export default {
         return {
             choferes: [],
             token: '',
-            requestComplete: false,
+            requestComplete: false
         }
     },
     methods: {
