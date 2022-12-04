@@ -1,14 +1,17 @@
 <template>
 
-    Input Token Generated:<input id="input_token" type="text" v-model="token" v-if="!requestCompleteOrdenesById" />
-    Input Estado Search:<input id="input_id" type="text" v-model="id" v-if="!requestCompleteOrdenesById" />
+    <div v-if="!requestCompleteOrdenesById">
+        Input Token Generated:<input id="input_token" type="text" v-model="token"  />
+        Input Estado Search:<input id="input_id" type="text" v-model="id" />
 
-    <button id="id_button_ordenes_by_id" @click="getOrdenesById" v-if="!requestCompleteOrdenesById">
-        Search Orden by ID
-    </button>
-    
+        <button id="id_button_ordenes_by_id" @click="getOrdenesById">
+            Search Orden by ID
+        </button>
+    </div>
+
+
     <div class="container" v-if="ordenes.length > 0">
-        <h1 class="text-center"> Orden filtro de Estado</h1>
+        <h1 class="text-center"> Orden filtro de ID</h1>
 
         <table class="table table-striped table-bordered">
             <thead>
@@ -79,7 +82,7 @@ export default {
             ordenes: [],
             token: '',
             requestCompleteOrdenesById: false,
-            id:'',
+            id: '',
 
         }
     },
@@ -89,23 +92,18 @@ export default {
                 // Obtener un token llamando al método "getTokens" importado
 
                 // Llamar al método "getOrdenesById" del servicio de orden, pasando el id y el token como parámetros
-                this.orden = await OrdenService.getOrdenesById(this.id, this.token);
+                this.ordenes = [await OrdenService.getOrdenesById(this.id, this.token)]
                 this.requestCompleteOrdenesById = true;
             } catch (error) {
                 console.error(error);
             }
         }
     },
-    // created(){
-    //      this.getCamiones()
-    // }
 
 }
 
 </script>
 
 <style>
-.container {
-    margin: 0 auto;
-}
+
 </style>

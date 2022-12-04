@@ -75,6 +75,8 @@ import Login from '@/components/Login.vue';
 import Camion from '@/components/Camion.vue';
 import Chofer from '@/components/Chofer.vue';
 import Orden from '@/components/Orden.vue';
+import OrdenById from '@/components/OrdenById.vue';
+
 import Producto from '@/components/Producto.vue';
 
 
@@ -86,7 +88,7 @@ export default {
       this.$emit("selectComponent", componentName);
     },
   },
-  components: { Login, Camion, Chofer, Orden, Producto }
+  components: { Login, Camion, Chofer, Orden, OrdenById, Producto }
 };
 </script>
 

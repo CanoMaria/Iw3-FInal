@@ -6,7 +6,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import io.swagger.annotations.ApiKeyAuth;
 
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -18,15 +17,15 @@ import org.springframework.web.bind.annotation.RestController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+
 import iua.edu.ar.business.ICamionBusiness;
 import iua.edu.ar.business.exception.BusinessException;
 import iua.edu.ar.business.exception.NotFoundException;
 import iua.edu.ar.model.Camion;
-import iua.edu.ar.model.Producto;
 
 @RestController
 @RequestMapping(value = Constantes.URL_CAMIONES)
-@ApiKeyAuth(name = "Authorization", in = ApiKeyLocation.HEADER)
+//@ApiKeyAuth(name = "Authorization", in = ApiKeyLocation.HEADER)
 @Api(value = "Camiones", description = "Operaciones relacionadas con los camiones", tags = { "Camiones" })
 public class CamionRestController {
 

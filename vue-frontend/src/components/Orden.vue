@@ -1,9 +1,13 @@
 <template>
 
-    Input Token Generated:<input id="input_token" type="text" v-model="token" v-if="!requestComplete" />
-    <button id="id_button_ordenes" @click="getOrdenes" v-if="!requestCompleteOrdenes">
-        Get ordenes
-    </button>
+    <div v-if="!requestCompleteOrdenes">
+        <input id="input_token" type="text" v-model="token"/>
+        <button id="id_button_ordenes" @click="getOrdenes">
+            Get ordenes
+        </button>
+    </div>
+
+
 
     <div class="container" v-if="ordenes.length > 0">
         <h1 class="text-center"> Lista de Ordenes</h1>
@@ -78,7 +82,6 @@ export default {
             ordenes: [],
             token: '',
             requestCompleteOrdenes: false,
-            requestCompleteOrdenesById: false,
             id: '',
 
         }
@@ -91,17 +94,6 @@ export default {
                 // Llamar al método "getCamiones" del servicio de camión, pasando el token como un parámetro
                 this.ordenes = await OrdenService.getOrdenes(this.token);
                 this.requestCompleteOrdenes = true;
-            } catch (error) {
-                console.error(error);
-            }
-        },
-        async getOrdenesById() {
-            try {
-                // Obtener un token llamando al método "getTokens" importado
-
-                // Llamar al método "getOrdenesById" del servicio de orden, pasando el id y el token como parámetros
-                this.orden = await OrdenService.getOrdenesById(this.id, this.token);
-                this.requestCompleteOrdenesById = true;
             } catch (error) {
                 console.error(error);
             }
