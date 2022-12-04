@@ -39,6 +39,12 @@
           </li>
           <li class="nav-item active">
             <a class="nav-link" href="#" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false"
+              @click="selectComponent('OrdenById')">
+              Orden By ID
+            </a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="#" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false"
               @click="selectComponent('Producto')">
               Producto
             </a>

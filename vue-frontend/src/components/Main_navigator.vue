@@ -25,6 +25,8 @@ import Orden from './Orden.vue';
 import Chofer from './Chofer.vue';
 import Login from './Login.vue';
 import Producto from './Producto.vue';
+import OrdenById from './OrdenById.vue';
+
 
 
 
@@ -36,7 +38,8 @@ export default {
     Orden,
     Chofer,
     Login,
-    Producto
+    Producto,
+    OrdenById
   },
   data() {
     return {
