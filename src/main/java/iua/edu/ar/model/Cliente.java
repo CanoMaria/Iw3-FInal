@@ -34,7 +34,7 @@ public class Cliente implements Serializable {
 
 	
 	@ApiModelProperty(notes = "Numero de telefono del cliente", example = "3541306008", required = false)
-	@Column(length = 100, nullable = false, unique = true)
+	@Column(length = 100, nullable = false)
 	private String contacto;
 
 	@OneToMany(targetEntity = Orden.class, mappedBy = "cliente", fetch = FetchType.LAZY)

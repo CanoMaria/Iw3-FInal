@@ -3,7 +3,7 @@
     <div class="form-row">
       <div class="form-group col-md-15">
         <label for="email">Nombre de usuario:</label>
-        <input id="email" type="email" v-model="username"/>
+        <input id="email" type="txt" v-model="username"/>
       </div>
 
       <div class="form-group col-md-15">

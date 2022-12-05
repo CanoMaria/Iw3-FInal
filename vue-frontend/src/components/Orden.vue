@@ -7,8 +7,6 @@
         </button>
     </div>
 
-
-
     <div class="container" v-if="ordenes.length > 0">
         <h1 class="text-center"> Lista de Ordenes</h1>
 

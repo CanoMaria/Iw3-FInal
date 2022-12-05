@@ -32,6 +32,35 @@ class OrdenService {
         throw error;
       }
     }
+
+    async createOrden(nuevaOrden, token) {
+      try {
+        const response = await axios.post(ORDEN_API_BASE_URL, nuevaOrden, {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+    
+        return response.data;
+      } catch (error) {
+        throw error;
+      }
+    }
+
+    async createOrden(nuevaOrden, token) {
+      try {
+        const response = await axios.post(ORDEN_API_BASE_URL, nuevaOrden, {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+    
+        return response.data;
+      } catch (error) {
+        throw error;
+      }
+    }
+
   }
   
   export default new OrdenService();

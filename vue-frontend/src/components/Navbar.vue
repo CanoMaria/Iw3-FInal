@@ -31,18 +31,34 @@
             </a>
           </li>
 
-          <li class="nav-item active">
-            <a class="nav-link" href="#" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false"
-              @click="selectComponent('Orden')">
-              Orden
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false">
+              Orden Requests
             </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="nav-link" href="#" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false"
+                @click="selectComponent('Orden')">
+                Orden
+              </a>
+              <div class="dropdown-divider"></div>
+              <a class="nav-link" href="#" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false"
+                @click="selectComponent('OrdenById')">
+                Orden By ID
+              </a>
+              <div class="dropdown-divider"></div>
+              <a class="nav-link" href="#" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false"
+                @click="selectComponent('OrdenByEstado')">
+                Orden By Estado
+              </a>
+              <div class="dropdown-divider"></div>
+              <a class="nav-link" href="#" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false"
+                @click="selectComponent('OrdenCreate')">
+                Orden Create
+              </a>
+            </div>
           </li>
-          <li class="nav-item active">
-            <a class="nav-link" href="#" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false"
-              @click="selectComponent('OrdenById')">
-              Orden By ID
-            </a>
-          </li>
+
           <li class="nav-item active">
             <a class="nav-link" href="#" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false"
               @click="selectComponent('Producto')">
@@ -51,7 +67,7 @@
           </li>
 
         </ul>
-        
+
       </div>
     </nav>
 
@@ -76,8 +92,9 @@ import Camion from '@/components/Camion.vue';
 import Chofer from '@/components/Chofer.vue';
 import Orden from '@/components/Orden.vue';
 import OrdenById from '@/components/OrdenById.vue';
-
+import OrdenCreate from '@/components/OrdenCreate.vue';
 import Producto from '@/components/Producto.vue';
+import OrdenByEstado from '@/components/OrdenByEstado.vue';
 
 
 export default {
@@ -88,10 +105,13 @@ export default {
       this.$emit("selectComponent", componentName);
     },
   },
-  components: { Login, Camion, Chofer, Orden, OrdenById, Producto }
+  components: { Login, Camion, Chofer, Orden, OrdenById, OrdenCreate, OrdenByEstado, Producto }
 };
+
 </script>
 
 <style>
 
 </style>
+
+

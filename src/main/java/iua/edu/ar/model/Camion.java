@@ -29,7 +29,7 @@ public class Camion implements Serializable {
 	private long id;
 
     @ApiModelProperty(notes = "Patente del camion", example = "AFY23CD", required = true)
-	@Column(length = 100, nullable = false, unique = true)
+	@Column(length = 100, nullable = false)
 	private String patente;
 
     @ApiModelProperty(notes = "Descripcion del camion", example = "Camion de transporte")
