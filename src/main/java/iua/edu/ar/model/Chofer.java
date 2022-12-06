@@ -37,7 +37,7 @@ public class Chofer implements Serializable {
 	private String apellido;
 
 	@ApiModelProperty(notes = "DNI del chofer", example = "38851024", required = true)
-	@Column(length = 256, nullable = false, unique = true)
+	@Column(length = 256, nullable = false)
 	private double documento;
 
 	@ApiModelProperty(notes = "Un chofer puede requerir una orden")
