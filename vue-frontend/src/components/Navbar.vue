@@ -39,7 +39,7 @@
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <a class="nav-link" href="#" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false"
                 @click="selectComponent('Orden')">
-                Orden
+                List Ordenes
               </a>
               <div class="dropdown-divider"></div>
               <a class="nav-link" href="#" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false"
@@ -68,7 +68,7 @@
               </a>
               <div class="dropdown-divider"></div>
               <a class="nav-link" href="#" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false"
-                @click="selectComponent('OrdenPesajeFinal')">
+                @click="selectComponent('OrdenCierre')">
                 Cierre >3
               </a>
               <div class="dropdown-divider"></div>
@@ -78,7 +78,7 @@
               </a>
               <div class="dropdown-divider"></div>
               <a class="nav-link" href="#" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false"
-                @click="selectComponent('OrdenPesajeFinal')">
+                @click="selectComponent('OrdenConciliacion')">
                 Conciliacion >5
               </a>
 
@@ -125,8 +125,8 @@ import OrdenByEstado from '@/components/OrdenByEstado.vue';
 import OrdenPesajeInicial from '@/components/OrdenPesajeInicial.vue';
 import OrdenPesajeFinal from '@/components/OrdenPesajeFinal.vue';
 import OrdenCargaDatos from '@/components/OrdenCargaDatos.vue';
-
-
+import OrdenCierre from '@/components/OrdenCierre.vue';
+import OrdenConciliacion from '@/components/OrdenConciliacion.vue';
 
 
 export default {
@@ -137,7 +137,7 @@ export default {
       this.$emit("selectComponent", componentName);
     },
   },
-  components: { Login, Camion, Chofer, Orden, OrdenById, OrdenCreate, OrdenByEstado, OrdenPesajeInicial, OrdenPesajeFinal, Producto, OrdenCargaDatos }
+  components: { Login, Camion, Chofer, Orden, OrdenById, OrdenCreate, OrdenByEstado, OrdenPesajeInicial, OrdenPesajeFinal, Producto, OrdenCargaDatos, OrdenCierre, OrdenConciliacion }
 };
 
 </script>

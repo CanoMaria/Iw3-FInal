@@ -9,7 +9,7 @@
 
       <tr>
         <td>Contraseña:</td>
-        <td><input type="text" v-model="password" /></td>
+        <td><input type="password" v-model="password" /></td>
       </tr>
 
       <tr>

@@ -31,10 +31,8 @@ import OrdenCreate from './OrdenCreate.vue';
 import OrdenPesajeInicial from './OrdenPesajeInicial.vue';
 import OrdenPesajeFinal from './OrdenPesajeFinal.vue';
 import OrdenCargaDatos from './OrdenCargaDatos.vue';
-
-
-
-
+import OrdenCierre from './OrdenCierre.vue';
+import OrdenConciliacion from './OrdenConciliacion.vue';
 
 
 
@@ -55,6 +53,8 @@ export default {
     OrdenPesajeInicial,
     OrdenPesajeFinal,
     OrdenCargaDatos,
+    OrdenCierre,
+    OrdenConciliacion,
 
   },
   data() {

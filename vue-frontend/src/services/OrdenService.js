@@ -91,12 +91,38 @@ class OrdenService {
 
   async addCargaDatos(id, cargaDatos, token) {
     try {
-      console.log(id)
-      console.log(cargaDatos)
-      console.log(token)
 
-    
       const response = await axios.post(ORDEN_API_BASE_URL + '/carga-datos/' + id, cargaDatos, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async closeOrden(id, token) {
+    try {
+
+      const response = await axios.post(ORDEN_API_BASE_URL + '/cierre-orden/' + id, undefined, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async conciliacionOrden(id, token) {
+    try {
+
+      const response = await axios.get(ORDEN_API_BASE_URL + '/conciliacion/' + id, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
