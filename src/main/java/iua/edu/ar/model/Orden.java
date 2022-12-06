@@ -11,6 +11,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -129,6 +130,7 @@ public class Orden implements Serializable {
 	private AlertaDatos alertaDatos;
   	
   	@ApiModelProperty(notes = "Estado de la alerta", required = false)
+  	@JsonManagedReference
   	@OneToMany(mappedBy="orden",cascade =  CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<Alerta> alertList;
   	
