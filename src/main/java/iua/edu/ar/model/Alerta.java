@@ -11,6 +11,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -45,6 +48,7 @@ public class Alerta implements Serializable{
 	private Date fechaDeAceptacion;
 	
 	@ApiModelProperty(notes = "Identificador de la orden a la que pertenece la alerta", required = false)
+	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name = "orden_id")
 	private Orden orden;
