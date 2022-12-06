@@ -1,18 +1,24 @@
 package iua.edu.ar.model;
 
 import java.io.Serializable;
+import java.sql.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -31,22 +37,35 @@ public class Alerta implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	
-	@ApiModelProperty(notes = "Estado de la alerta (si se envio o no el email)", required = false)
+	@ApiModelProperty(notes = "Estado de la alarma", required = false)
 	@Column(length = 100)
-	private EstadoAlerta estado= EstadoAlerta.NO_ENVIADO;
+	private EstadoAlerta estado=EstadoAlerta.NO_ENVIADO;
 	
-	@ApiModelProperty(notes = "Mails a los que enviar", required = false)
+	@ApiModelProperty(notes = "Usuario que acepto la alarma", required = false)
 	@Column(length = 100)
-	private String mail;
+	private String usrAceptador;
 	
-	@ApiModelProperty(notes = "Temperatura maxima permitida", required = false)
+	@ApiModelProperty(notes = "Observaciones", required = false)
 	@Column(length = 100)
-	private double temperaturaMax;
+	private String observaciones;
 	
-	@ApiModelProperty(notes = "Datos en caso de alerta", required = false)
-	@OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "orden_id")
+	@ApiModelProperty(notes = "Fecha en la que se acepto la alarma", required = false)
+	@Column(length = 100)
+	private Date fechaDeAceptacion;
+	
+	@ApiModelProperty(notes = "Identificador de la orden a la que pertenece la alerta", required = false)
+	@ManyToOne
+	@JoinTable(name = "orden_id")
 	private Orden orden;
+	
+
+	public Orden getOrden() {
+		return orden;
+	}
+
+	public void setOrden(Orden orden) {
+		this.orden = orden;
+	}
 
 	public long getId() {
 		return id;
@@ -54,6 +73,30 @@ public class Alerta implements Serializable{
 
 	public void setId(long id) {
 		this.id = id;
+	}
+
+	public String getUsrAceptador() {
+		return usrAceptador;
+	}
+
+	public void setUsrAceptador(String usrAceptador) {
+		this.usrAceptador = usrAceptador;
+	}
+
+	public String getObservaciones() {
+		return observaciones;
+	}
+
+	public void setObservaciones(String observaciones) {
+		this.observaciones = observaciones;
+	}
+
+	public Date getFechaDeAceptacion() {
+		return fechaDeAceptacion;
+	}
+
+	public void setFechaDeAceptacion(Date fechaDeAceptacion) {
+		this.fechaDeAceptacion = fechaDeAceptacion;
 	}
 
 	public EstadoAlerta getEstado() {
@@ -65,34 +108,6 @@ public class Alerta implements Serializable{
 	}
 
 
-	public String getMail() {
-		return mail;
-	}
 
-	public void setMail(String mail) {
-		this.mail = mail;
-	}
-
-	public double getTemperaturaMax() {
-		return temperaturaMax;
-	}
-
-	public void setTemperaturaMax(double temperaturaMax) {
-		this.temperaturaMax = temperaturaMax;
-	}
-
-	public Orden getOrden() {
-		return orden;
-	}
-
-	public void setOrden(Orden orden) {
-		this.orden = orden;
-	}
-
-
-
-
-	
-	
 	
 }

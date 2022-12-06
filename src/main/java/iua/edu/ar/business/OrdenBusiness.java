@@ -26,6 +26,7 @@ import iua.edu.ar.business.exception.BusinessException;
 import iua.edu.ar.business.exception.NotFoundException;
 import iua.edu.ar.business.exception.PasswordException;
 import iua.edu.ar.model.Alerta;
+import iua.edu.ar.model.AlertaDatos;
 import iua.edu.ar.model.DatoCarga;
 import iua.edu.ar.model.EstadoAlerta;
 import iua.edu.ar.model.Orden;
@@ -90,17 +91,18 @@ public class OrdenBusiness implements IOrdenBusiness {
 					
 				//Calculamos el tamanio del preset
 				for(int i=0;i<cisternadoArray.length;i++){
-					preset+=cisternadoArray[i];
+					preset=preset+cisternadoArray[i];
 				}
 				//Guardamos el limite del preset
 				orden.setPreset(preset);
 				//Guardamos el id de la orden en la alerta
-				orden.getAlerta().setOrden(orden);
+				orden.getAlertaDatos().setOrden(orden);
 				
 				//Si todos lo datos son correctos, guardamos en estado 1
 				if (orden.checkBasicData()) {
 					orden.setEstado(1);
 				}else {
+					System.out.println(orden.checkBasicData());
 					throw new BusinessException("Los datos ingresados no son correctos");
 				}
 			}
@@ -211,19 +213,29 @@ public class OrdenBusiness implements IOrdenBusiness {
 			ordenDetalle.setTemperaturaProducto(datosCarga.getTemperaturaProducto());
 			ordenDetalle.setFecha(actualDate);
 			
-			EstadoAlerta noEnviado = EstadoAlerta.NO_ENVIADO;
-			EstadoAlerta enviado = EstadoAlerta.ENVIADO;
-			
+						
 			//Verificamos si ya se envio un mensaje de alerta
-			Alerta ordenAlert=ordenDB.getAlerta();
-			if(ordenAlert.getEstado().equals(noEnviado)) {
+			
+			//obtenemos la ultima alerta que tuvo
+			Alerta ordenAlert= new Alerta();
+			if(ordenDB.getAlertList().size()!=0) {
+				ordenAlert=ordenDB.getAlertList().get(ordenDB.getAlertList().size()-1);
+			}
+			
+			if(ordenAlert.getEstado().equals(EstadoAlerta.NO_ENVIADO)|| ordenAlert.getEstado().equals(EstadoAlerta.ACEPTADO)) {
+				//Obtenemos los datos para comunicar la alerta
+				AlertaDatos dataAlert=ordenDB.getAlertaDatos();
+				
 				//Funcion que verifica la temperatura y envia un mail en caso de alerta
-				boolean alertStatus = sendAlarm(datosCarga.getTemperaturaProducto(),idOrden,ordenDB.getAlerta());
+				boolean alertStatus = sendAlarm(datosCarga.getTemperaturaProducto(),idOrden,dataAlert);
+				
 				//Si se detecto una alerta registramos que ya se envio el mail
 				if(alertStatus==true) {
-					ordenAlert.setEstado(enviado);
+					ordenAlert.setEstado(EstadoAlerta.ENVIADO);
 					//guardamos el nuevo estado de la alerta
-					ordenDB.setAlerta(ordenAlert);
+					List<Alerta> newAlertList=ordenDB.getAlertList();
+					newAlertList.add(ordenAlert);
+					ordenDB.setAlertList(newAlertList);
 					add(ordenDB);
 				}
 			}
@@ -260,7 +272,7 @@ public class OrdenBusiness implements IOrdenBusiness {
 
 	}
 	
-	public boolean sendAlarm(Double temperature,Long idOrden,Alerta alertData) {
+	public boolean sendAlarm(Double temperature,Long idOrden,AlertaDatos alertData) {
 		double temperatureLimit=alertData.getTemperaturaMax();
 		String emailString=alertData.getMail(); //obtenemos un string con formato [mail1,mail2]
 		emailString=emailString.substring(1, emailString.length()-1);
