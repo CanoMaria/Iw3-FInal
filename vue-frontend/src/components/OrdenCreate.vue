@@ -2,7 +2,7 @@
     <div class="container" v-if="!requestCompleteCrearOrdenes">
         <table>
             <tr>
-                <td>Input Token Generated:</td>
+                <td>Token Generated:</td>
                 <td><input id="input_token" type="text" v-model="token" /></td>
             </tr>
             
@@ -18,7 +18,7 @@
 
             <tr>
                 <td>Contacto del cliente:</td>
-                <td><input type="text" v-model="nuevaOrden.cliente.contacto" /></td>
+                <td><input type="number" v-model="nuevaOrden.cliente.contacto" /></td>
             </tr>
 
             ...
@@ -90,6 +90,9 @@
             </tr>
         </table>
     </div>
+
+    <p v-if="requestCompleteCrearOrdenes">La petición se completó exitosamente</p>
+
 </template>
 
 <script>
@@ -104,26 +107,26 @@ export default {
             nuevaOrden: {
                 "fechaRecepcion": "2022-11-18",
                 "cliente": {
-                    "razonSocial": "FedeRazonSocial",
+                    "razonSocial": "RazonSocialTest1",
                     "contacto": "3517736362"
                 },
                 "camion": {
                     "cisternado": ["111", "222", "333"],
-                    "descripcion": "Fede Descr",
+                    "descripcion": "DescrCamionTest1",
                     "patente": "CAM567041"
                 },
                 "chofer": {
-                    "apellido": "Caba",
-                    "documento": "37689712",
-                    "nombre": "Fede"
+                    "apellido": "ApellidoChoferTest1",
+                    "documento": 37689712,
+                    "nombre": "NombreChoferTest1"
                 },
                 "alerta": {
                     "mail": "[ayecano98@gmail.com]",
                     "temperaturaMax": "50"
                 },
                 "producto": {
-                    "descripcion": "Fede Descr",
-                    "nombre": "FedeProdu"
+                    "descripcion": "DescriProdTest1",
+                    "nombre": "NombreProdTest1"
                 },
                 "codigoExterno": "900"
             }
@@ -139,6 +142,7 @@ export default {
                 // Llamar al método "createOrden" del servicio de orden, pasando la nueva orden y el token como parámetros
                 this.nuevaOrden = await OrdenService.createOrden(this.nuevaOrden, this.token);
                 console.log('Orden creada correctamente:', this.nuevaOrden);
+                
                 this.requestCompleteCrearOrdenes = true;
             } catch (error) {
                 console.error(error);

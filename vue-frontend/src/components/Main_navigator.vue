@@ -29,6 +29,12 @@ import OrdenById from './OrdenById.vue';
 import OrdenByEstado from './OrdenByEstado.vue';
 import OrdenCreate from './OrdenCreate.vue';
 import OrdenPesajeInicial from './OrdenPesajeInicial.vue';
+import OrdenPesajeFinal from './OrdenPesajeFinal.vue';
+import OrdenCargaDatos from './OrdenCargaDatos.vue';
+
+
+
+
 
 
 
@@ -47,6 +53,8 @@ export default {
     OrdenByEstado,
     OrdenCreate,
     OrdenPesajeInicial,
+    OrdenPesajeFinal,
+    OrdenCargaDatos,
 
   },
   data() {
@@ -70,7 +78,7 @@ export default {
 <style>
 footer {
   background-color: #333;
-  color: #fff;
+  color: rgb(0, 0, 0);
   font-size: 16px;
   margin: 32px 0;
   padding: 32px;

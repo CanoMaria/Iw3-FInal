@@ -1,23 +1,23 @@
 <template>
   <form @submit.prevent="login" class="container" v-if="!requestComplete">
-    <div class="form-row">
-      <div class="form-group col-md-15">
-        <label for="email">Nombre de usuario:</label>
-        <input id="email" type="txt" v-model="username"/>
-      </div>
+    <table>
+      <tr>
+        <td>Nombre de usuario:</td>
+        <td><input type="text" v-model="username" /></td>
+      </tr>
 
-      <div class="form-group col-md-15">
-        <label for="password" >Contraseña:</label>
-        <input id="password" type="password" v-model="password" />
-      </div>
-      <div class="form-row">
-      <div class="form-group col-md-15">
-        <button type="submit" @click="getTokens" >Iniciar
-          sesión</button>
-      </div>
-    </div>
-  </div>
+
+      <tr>
+        <td>Contraseña:</td>
+        <td><input type="text" v-model="password" /></td>
+      </tr>
+
+      <tr>
+        <td><button @click="getTokens">Generar Token</button></td>
+      </tr>
+    </table>
   </form>
+
 
   <p v-if="error" class="error-message">{{ error }}</p>
   <!-- Añadir un <label> para mostrar el token -->

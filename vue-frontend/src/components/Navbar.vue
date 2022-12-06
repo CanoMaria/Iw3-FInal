@@ -10,7 +10,7 @@
         <span class="navbar-toggler-icon"></span>
       </button>
 
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <div class="collapse navbar-collapse" id="navbarSupportedContent" style="background-color: #257;">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item active">
             <a class="nav-link" href="#" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false"
@@ -44,27 +44,48 @@
               <div class="dropdown-divider"></div>
               <a class="nav-link" href="#" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false"
                 @click="selectComponent('OrdenById')">
-                Orden By ID
+                Search By ID
               </a>
               <div class="dropdown-divider"></div>
               <a class="nav-link" href="#" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false"
                 @click="selectComponent('OrdenByEstado')">
-                Orden By Estado
+                Search By Estado
               </a>
               <div class="dropdown-divider"></div>
               <a class="nav-link" href="#" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false"
                 @click="selectComponent('OrdenCreate')">
-                Orden Create
+                Create >1
               </a>
               <div class="dropdown-divider"></div>
               <a class="nav-link" href="#" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false"
                 @click="selectComponent('OrdenPesajeInicial')">
-                Orden Pesaje Inicial
+                Pesaje Inicial >2.1
               </a>
+              <div class="dropdown-divider"></div>
+              <a class="nav-link" href="#" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false"
+                @click="selectComponent('OrdenCargaDatos')">
+                Carga de Datos >2.2
+              </a>
+              <div class="dropdown-divider"></div>
+              <a class="nav-link" href="#" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false"
+                @click="selectComponent('OrdenPesajeFinal')">
+                Cierre >3
+              </a>
+              <div class="dropdown-divider"></div>
+              <a class="nav-link" href="#" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false"
+                @click="selectComponent('OrdenPesajeFinal')">
+                Pesaje Final >4
+              </a>
+              <div class="dropdown-divider"></div>
+              <a class="nav-link" href="#" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false"
+                @click="selectComponent('OrdenPesajeFinal')">
+                Conciliacion >5
+              </a>
+
             </div>
 
           </li>
-          
+
           <li class="nav-item active">
             <a class="nav-link" href="#" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false"
               @click="selectComponent('Producto')">
@@ -101,6 +122,11 @@ import OrdenById from '@/components/OrdenById.vue';
 import OrdenCreate from '@/components/OrdenCreate.vue';
 import Producto from '@/components/Producto.vue';
 import OrdenByEstado from '@/components/OrdenByEstado.vue';
+import OrdenPesajeInicial from '@/components/OrdenPesajeInicial.vue';
+import OrdenPesajeFinal from '@/components/OrdenPesajeFinal.vue';
+import OrdenCargaDatos from '@/components/OrdenCargaDatos.vue';
+
+
 
 
 export default {
@@ -111,7 +137,7 @@ export default {
       this.$emit("selectComponent", componentName);
     },
   },
-  components: { Login, Camion, Chofer, Orden, OrdenById, OrdenCreate, OrdenByEstado, Producto }
+  components: { Login, Camion, Chofer, Orden, OrdenById, OrdenCreate, OrdenByEstado, OrdenPesajeInicial, OrdenPesajeFinal, Producto, OrdenCargaDatos }
 };
 
 </script>
