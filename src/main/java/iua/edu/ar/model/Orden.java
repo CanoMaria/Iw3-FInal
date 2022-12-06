@@ -2,11 +2,14 @@ package iua.edu.ar.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
+
 import javax.persistence.*;
 
 import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import io.swagger.annotations.ApiModel;
@@ -43,18 +46,20 @@ import io.swagger.annotations.ApiModelProperty;
 
 public class Orden implements Serializable {
 
-	private static final long serialVersionUID = -4828422833183668198L;
-	
 	@Override
 	public String toString() {
 		return "Orden [id=" + id + ", fechaRecepcion=" + fechaRecepcion + ", fechaRecepcionPesajeInicial="
 				+ fechaRecepcionPesajeInicial + ", fechaFinCarga=" + fechaFinCarga + ", fechaRecepcionPesajeFinal="
 				+ fechaRecepcionPesajeFinal + ", cliente=" + cliente + ", producto=" + producto + ", camion=" + camion
 				+ ", chofer=" + chofer + ", estado=" + estado + ", ultimosDatosCarga=" + ultimosDatosCarga
-				+ ", promedioDatosCarga=" + promedioDatosCarga + ", alerta=" + alerta + ", password=" + password
-				+ ", fecuencia=" + fecuencia + ", pesoInicial=" + pesoInicial + ", pesoFinal=" + pesoFinal + ", preset="
-				+ preset + ", codigoExterno=" + codigoExterno + "]";
+				+ ", promedioDatosCarga=" + promedioDatosCarga + ", alertaDatos=" + alertaDatos + ", alertList="
+				+ alertList + ", password=" + password + ", fecuencia=" + fecuencia + ", pesoInicial=" + pesoInicial
+				+ ", pesoFinal=" + pesoFinal + ", preset=" + preset + ", codigoExterno=" + codigoExterno + "]";
 	}
+
+
+	private static final long serialVersionUID = -4828422833183668198L;
+	
 
 	@ApiModelProperty(notes = "Identificador de la orden, clave autogenerada", required = false)
 	@Id
@@ -119,11 +124,14 @@ public class Orden implements Serializable {
 	private PromedioDatoCarga promedioDatosCarga;
 
   	@ApiModelProperty(notes = "Datos en caso de alerta", required = false)
-  	@JoinColumn(nullable = true)
-	@OneToOne(cascade =  CascadeType.ALL)
-	private Alerta alerta;
-	
-	
+  	@JoinColumn(name = "alerta_datos_id",nullable = true)
+  	@OneToOne(cascade =  CascadeType.ALL)
+	private AlertaDatos alertaDatos;
+  	
+  	@ApiModelProperty(notes = "Estado de la alerta", required = false)
+  	@OneToMany(mappedBy="orden",cascade =  CascadeType.ALL, fetch = FetchType.EAGER)
+	private List<Alerta> alertList;
+  	
 	@ApiModelProperty(notes = "Contraseña autogenerada para cada orden", required = false)
 	@Column(length = 100, nullable = true)
 	private String password;
@@ -139,7 +147,9 @@ public class Orden implements Serializable {
 	@ApiModelProperty(notes = "Peso del camion luego de la carga", required = false)
 	@Column(length = 100, nullable = true)
 	private Double pesoFinal;
-
+	
+	
+	
 	/*
 	 * Cambiar el modelado del preset
 	 */
@@ -173,34 +183,53 @@ public class Orden implements Serializable {
 		if(this.getProducto() == null)
 			this.setProducto(ordenDB.getProducto());
 		
-		if(this.getAlerta() == null)
-			this.setAlerta(ordenDB.getAlerta());
+		if(this.getAlertaDatos() == null)
+			this.setAlertaDatos(ordenDB.getAlertaDatos());
+		if(this.getAlertList() == null)
+			this.setAlertList(ordenDB.getAlertList());
 	}
 	
 	
 	public Boolean checkBasicData() {
-		if(this.getCamion() == null) 
+		if(this.getCamion() == null) {
+			System.out.print("camion");
 			return false;
+		}
+			
+		if(this.getChofer() == null) {
+			System.out.print("chofer");
+			return false;
+		}
 		
-		if(this.getChofer() == null) 
+		if(this.getCliente() == null) {
+			System.out.print("cliente");
 			return false;
+		}
 		
-		if(this.getCliente() == null) 
+		if(this.getCodigoExterno() == null) {
+			System.out.print("codigo");
 			return false;
+		}
 		
-		if(this.getCodigoExterno() == null) 
+		if(this.getFechaRecepcion() == null) {
+			System.out.print("fecha");
 			return false;
+		}
 		
-		if(this.getFechaRecepcion() == null) 
+		if(this.getPreset() == 0){
+			System.out.print("preset");
 			return false;
+		}
 		
-		if(this.getPreset() == 0)
+		if(this.getProducto() == null){
+			System.out.print("producto");
 			return false;
+		}
+		if(this.getAlertaDatos() == null){
+			System.out.print("datos");
+			return false;
+		}
 		
-		if(this.getProducto() == null)
-			return false;
-		if(this.getAlerta() == null)
-			return false;
 		return true;
 	}
 
@@ -217,6 +246,16 @@ public class Orden implements Serializable {
 	public long getId() {
 		return id;
 	}
+
+	public List<Alerta> getAlertList() {
+		return alertList;
+	}
+
+
+	public void setAlertList(List<Alerta> alertList) {
+		this.alertList = alertList;
+	}
+
 
 	public void setId(long id) {
 		this.id = id;
@@ -358,12 +397,15 @@ public class Orden implements Serializable {
 	public void setPesoFinal(Double pesoFinal) {
 		this.pesoFinal = pesoFinal;
 	}
-	public Alerta getAlerta() {
-		return alerta;
+
+
+	public AlertaDatos getAlertaDatos() {
+		return alertaDatos;
 	}
 
-	public void setAlerta(Alerta alerta) {
-		this.alerta = alerta;
+
+	public void setAlertaDatos(AlertaDatos alertaDatos) {
+		this.alertaDatos = alertaDatos;
 	}
 
 }
