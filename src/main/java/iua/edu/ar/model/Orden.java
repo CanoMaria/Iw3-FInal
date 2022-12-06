@@ -129,8 +129,7 @@ public class Orden implements Serializable {
 	private AlertaDatos alertaDatos;
   	
   	@ApiModelProperty(notes = "Estado de la alerta", required = false)
-  	@JoinColumn(nullable = true)
-  	@OneToMany(cascade =  CascadeType.ALL, fetch = FetchType.EAGER)
+  	@OneToMany(mappedBy="orden",cascade =  CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<Alerta> alertList;
   	
 	@ApiModelProperty(notes = "Contraseña autogenerada para cada orden", required = false)

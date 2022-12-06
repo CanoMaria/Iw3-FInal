@@ -44,10 +44,11 @@ public class OrdenBusiness implements IOrdenBusiness {
 	private OrdenRepository ordenDAO;
 	@Autowired
 	private OrdenDetalleRepository ordenDetalleDAO;
-
+	
 	@Autowired
 	OrdenDetalleBusiness ordenDetalleBusiness;
-	
+	@Autowired
+	AlertaBusiness alertBusiness;
 	private Logger log = LoggerFactory.getLogger(this.getClass());
 
 	@Override
@@ -217,12 +218,12 @@ public class OrdenBusiness implements IOrdenBusiness {
 			//Verificamos si ya se envio un mensaje de alerta
 			
 			//obtenemos la ultima alerta que tuvo
-			Alerta ordenAlert= new Alerta();
+			Alerta lastAlert= new Alerta();
 			if(ordenDB.getAlertList().size()!=0) {
-				ordenAlert=ordenDB.getAlertList().get(ordenDB.getAlertList().size()-1);
+				lastAlert=ordenDB.getAlertList().get(ordenDB.getAlertList().size()-1);
 			}
 			
-			if(ordenAlert.getEstado().equals(EstadoAlerta.NO_ENVIADO)|| ordenAlert.getEstado().equals(EstadoAlerta.ACEPTADO)) {
+			if(lastAlert.getEstado().equals(EstadoAlerta.NO_ENVIADO)|| lastAlert.getEstado().equals(EstadoAlerta.ACEPTADO)) {
 				//Obtenemos los datos para comunicar la alerta
 				AlertaDatos dataAlert=ordenDB.getAlertaDatos();
 				
@@ -231,12 +232,12 @@ public class OrdenBusiness implements IOrdenBusiness {
 				
 				//Si se detecto una alerta registramos que ya se envio el mail
 				if(alertStatus==true) {
-					ordenAlert.setEstado(EstadoAlerta.ENVIADO);
+					Alerta newAlert= new Alerta();
+					newAlert.setEstado(EstadoAlerta.ENVIADO);
+					newAlert.setOrden(ordenDB);
 					//guardamos el nuevo estado de la alerta
-					List<Alerta> newAlertList=ordenDB.getAlertList();
-					newAlertList.add(ordenAlert);
-					ordenDB.setAlertList(newAlertList);
-					add(ordenDB);
+					alertBusiness.add(newAlert);
+					
 				}
 			}
 			

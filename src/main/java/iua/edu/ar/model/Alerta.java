@@ -1,25 +1,16 @@
 package iua.edu.ar.model;
 
 import java.io.Serializable;
-import java.sql.Date;
-import java.util.List;
-
-import javax.persistence.CascadeType;
+import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -55,8 +46,9 @@ public class Alerta implements Serializable{
 	
 	@ApiModelProperty(notes = "Identificador de la orden a la que pertenece la alerta", required = false)
 	@ManyToOne
-	@JoinTable(name = "orden_id")
+	@JoinColumn(name = "orden_id")
 	private Orden orden;
+
 	
 
 	public Orden getOrden() {
