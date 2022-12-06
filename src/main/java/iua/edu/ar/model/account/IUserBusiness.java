@@ -10,7 +10,7 @@ public interface IUserBusiness {
 	
 	public User cargar(int id) throws BusinessException, NotFoundException;
 	public List<User> lista() throws BusinessException;
-	public User agregar(User user) throws BusinessException, FoundException;
+	public User add(User user) throws BusinessException, FoundException;
 	public User modificar(User user) throws BusinessException, FoundException, NotFoundException;
 	public User cargarPorNombreOEmail(String nombreOEmail) throws BusinessException, NotFoundException;
 }

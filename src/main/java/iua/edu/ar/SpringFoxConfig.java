@@ -26,6 +26,7 @@ public class SpringFoxConfig {
 	  	      .build()
 	  	      .apiInfo(apiInfoMetadata());
 		// @formatter:on
+	    
 
 	}
 	

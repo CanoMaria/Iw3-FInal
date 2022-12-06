@@ -1,35 +1,67 @@
 <template>
-    <button id="id_button_ordenes" @click="getOrdenes" v-if="ordenes.length<=0">
-      Listar ordenes
-    </button>
-    <div class="container" v-if="ordenes.length>0">
+
+    <div v-if="!requestCompleteOrdenes">
+        <input id="input_token" type="text" v-model="token"/>
+        <button id="id_button_ordenes" @click="getOrdenes">
+            Get ordenes
+        </button>
+    </div>
+
+    <div class="container" v-if="ordenes.length > 0">
         <h1 class="text-center"> Lista de Ordenes</h1>
-        <table class="table table-striped">
+
+        <table class="table table-striped table-bordered">
             <thead>
-                <th>Orden ID</th>
-                <th>Orden Fecha Recepcion</th>
-                <th>Orden Fecha Recepcion Pesaje Inicial</th>
-                <th>Orden Fecha Fin de Carga</th>
-                
-                <th>Datos del Cliente asociado a la orden</th>
-                
-                <th>Datos del Producto asociado a la orden</th>
+                <th>ID</th>
+                <th>Fecha Recepcion</th>
+                <th>Fecha Recepcion Pesaje Inicial</th>
+                <th>Fecha Fin de Carga</th>
 
-                <th>Datos del Camion asociado a la orden</th>
+                <th>[Cliente]Razon social</th>
+                <th>[Cliente]Contacto</th>
 
-                <th>Datos del Chofer asociado a la orden</th>
+
+                <th>[Producto]Nombre</th>
+
+                <th>[Camion]Patente</th>
+
+                <th>[Camion]Cisternado</th>
+
+
+                <th>[Chofer]Nombre</th>
+                <th>[Chofer]Apellido</th>
+                <th>[Chofer]Documento</th>
+
+
+                <th>Estado de la orden</th>
+
 
             </thead>
             <tbody>
-                <tr v-for = "orden in ordenes" v-bind:key = "orden.id">
-                <td> {{ orden.id }} </td>
-                <td> {{ orden.fechaRecepcion }} </td>
-                <td> {{ orden.fechaRecepcionPesajeInicial }} </td>
-                <td> {{ orden.fechaFinCarga }} </td>
-                <td> {{ orden.cliente }} </td>
-                <td> {{ orden.producto }} </td>
-                <td> {{ orden.camion }} </td>
-                <td> {{ orden.chofer }} </td>
+                <tr v-for="orden in ordenes" v-bind:key="orden.id">
+                    <td> {{ orden.id }} </td>
+                    <td> {{ orden.fechaRecepcion }} </td>
+                    <td> {{ orden.fechaRecepcionPesajeInicial }} </td>
+                    <td> {{ orden.fechaFinCarga }} </td>
+
+                    <!-- <td> {{ orden.cliente }} </td> -->
+                    <td> {{ orden.cliente.razonSocial }} </td>
+                    <td> {{ orden.cliente.contacto }} </td>
+
+
+                    <td> {{ orden.producto.nombre }} </td>
+
+                    <td> {{ orden.camion.patente }} </td>
+                    <td> {{ orden.camion.cisternado }} </td>
+
+
+                    <td> {{ orden.chofer.nombre }} </td>
+                    <td> {{ orden.chofer.apellido }} </td>
+                    <td> {{ orden.chofer.documento }} </td>
+
+
+                    <td> {{ orden.estado }} </td>
+
 
                 </tr>
             </tbody>
@@ -41,28 +73,40 @@
 <script>
 import OrdenService from '@/services/OrdenService';
 
-    export default{
-        name: '',
-        data(){
-            return {
-                ordenes : []
-            }
-        },
-        methods:{
-            getOrdenes(){
-                OrdenService.getOrdenes().then((response) => {
-                    this.ordenes = response.data
-                })
-            }
-        },
-        // created(){
-        //      this.getCamiones()
-        // }
+export default {
+    name: '',
+    data() {
+        return {
+            ordenes: [],
+            token: '',
+            requestCompleteOrdenes: false,
+            id: '',
 
-    }
+        }
+    },
+    methods: {
+        async getOrdenes() {
+            try {
+                // Obtener un token llamando al método "getTokens" importado
+
+                // Llamar al método "getCamiones" del servicio de camión, pasando el token como un parámetro
+                this.ordenes = await OrdenService.getOrdenes(this.token);
+                this.requestCompleteOrdenes = true;
+            } catch (error) {
+                console.error(error);
+            }
+        }
+    },
+    // created(){
+    //      this.getCamiones()
+    // }
+
+}
 
 </script>
 
 <style>
-
+.container {
+    margin: 0 auto;
+}
 </style>

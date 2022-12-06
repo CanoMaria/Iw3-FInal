@@ -32,9 +32,13 @@ public class UserBusiness implements IUserBusiness {
 	}
 
 	@Override
-	public User agregar(User user) throws BusinessException, FoundException {
+	public User add(User user) throws BusinessException, FoundException {
 		// TODO Auto-generated method stub
-		return null;
+		try {
+			return userDAO.save(user);
+		} catch (Exception e) {
+			throw new BusinessException(e);
+		}	
 	}
 
 	@Override
