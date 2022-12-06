@@ -1,8 +1,8 @@
 <template>
 
     <div v-if="!requestCompleteOrdenesById">
-        Input Token Generated:<input id="input_token" type="text" v-model="token"  />
-        Input Estado Search:<input id="input_id" type="text" v-model="id" />
+        Token Generated:<input id="input_token" type="text" v-model="token"  />
+        Estado Search:<input id="input_id" type="text" v-model="id" />
 
         <button id="id_button_ordenes_by_id" @click="getOrdenesById">
             Search Orden by ID
@@ -16,13 +16,12 @@
         <table class="table table-striped table-bordered">
             <thead>
                 <th>ID</th>
-                <th>Fecha Recepcion</th>
+                <!-- <th>Fecha Recepcion</th>
                 <th>Fecha Recepcion Pesaje Inicial</th>
-                <th>Fecha Fin de Carga</th>
+                <th>Fecha Fin de Carga</th> -->
 
                 <th>[Cliente]Razon social</th>
                 <th>[Cliente]Contacto</th>
-
 
                 <th>[Producto]Nombre</th>
 
@@ -30,6 +29,8 @@
 
                 <th>[Camion]Cisternado</th>
 
+                <th>[Peso]Inicial</th>
+                <th>[Peso]Final</th>
 
                 <th>[Chofer]Nombre</th>
                 <th>[Chofer]Apellido</th>
@@ -43,9 +44,9 @@
             <tbody>
                 <tr v-for="orden in ordenes" v-bind:key="orden.id">
                     <td> {{ orden.id }} </td>
-                    <td> {{ orden.fechaRecepcion }} </td>
+                    <!-- <td> {{ orden.fechaRecepcion }} </td>
                     <td> {{ orden.fechaRecepcionPesajeInicial }} </td>
-                    <td> {{ orden.fechaFinCarga }} </td>
+                    <td> {{ orden.fechaFinCarga }} </td> -->
 
                     <td> {{ orden.cliente.razonSocial }} </td>
                     <td> {{ orden.cliente.contacto }} </td>
@@ -56,6 +57,8 @@
                     <td> {{ orden.camion.patente }} </td>
                     <td> {{ orden.camion.cisternado }} </td>
 
+                    <td> {{ orden.pesoInicial }} </td>
+                    <td> {{ orden.pesoFinal}} </td>
 
                     <td> {{ orden.chofer.nombre }} </td>
                     <td> {{ orden.chofer.apellido }} </td>

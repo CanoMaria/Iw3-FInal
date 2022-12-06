@@ -1,8 +1,8 @@
 <template>
 
     <div v-if="!requestCompleteOrdenesByEstado">
-        Input Token Generated:<input id="input_token" type="text" v-model="token"  />
-        Input Estado de la Orden:<input type="text" v-model="estadoInput" />
+        Token Generated:<input id="input_token" type="text" v-model="token"  />
+        Estado de la Orden:<input type="text" v-model="estadoInput" />
         <button id="id_button_ordenes_by_estado" @click="getOrdenes">
             Get ordenes
         </button>

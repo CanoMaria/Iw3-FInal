@@ -28,6 +28,8 @@ import Producto from './Producto.vue';
 import OrdenById from './OrdenById.vue';
 import OrdenByEstado from './OrdenByEstado.vue';
 import OrdenCreate from './OrdenCreate.vue';
+import OrdenPesajeInicial from './OrdenPesajeInicial.vue';
+
 
 
 
@@ -43,7 +45,8 @@ export default {
     Producto,
     OrdenById,
     OrdenByEstado,
-    OrdenCreate
+    OrdenCreate,
+    OrdenPesajeInicial,
 
   },
   data() {

@@ -56,9 +56,15 @@
                 @click="selectComponent('OrdenCreate')">
                 Orden Create
               </a>
+              <div class="dropdown-divider"></div>
+              <a class="nav-link" href="#" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false"
+                @click="selectComponent('OrdenPesajeInicial')">
+                Orden Pesaje Inicial
+              </a>
             </div>
-          </li>
 
+          </li>
+          
           <li class="nav-item active">
             <a class="nav-link" href="#" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false"
               @click="selectComponent('Producto')">
