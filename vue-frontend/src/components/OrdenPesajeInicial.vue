@@ -44,7 +44,6 @@ export default {
             ordenes: [],
             token: '',
             requestCompleteOrdenesPesajeInicial: false,
-            id: '',
             pesajeInicial: {
                 "id": 362,
                 "pesoInicial": 777

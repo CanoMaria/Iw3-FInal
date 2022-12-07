@@ -61,12 +61,12 @@
 
             <tr>
                 <td>Email para Alerta:</td>
-                <td><input type="text" v-model="nuevaOrden.alerta.mail" /></td>
+                <td><input type="text" v-model="nuevaOrden.alertaDatos.mail" /></td>
             </tr>
 
             <tr>
                 <td>Temperatura Max:</td>
-                <td><input type="text" v-model="nuevaOrden.alerta.temperaturaMax" /></td>
+                <td><input type="text" v-model="nuevaOrden.alertaDatos.temperaturaMax" /></td>
             </tr>
 
             ...
@@ -131,7 +131,7 @@ export default {
                     "documento": '',
                     "nombre": ""
                 },
-                "alerta": {
+                "alertaDatos": {
                     "mail": "[]",
                     "temperaturaMax": ''
                 },
@@ -147,7 +147,6 @@ export default {
         async createOrden() {
             try {
                 // Obtener un token llamando al método "getTokens" importado
-                console.log(this.nuevaOrden)
                 // Llamar al método "createOrden" del servicio de orden, pasando la nueva orden y el token como parámetros
                 this.nuevaOrden = await OrdenService.createOrden(this.nuevaOrden, this.token);
 
