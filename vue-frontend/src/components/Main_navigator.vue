@@ -19,6 +19,7 @@
 </template>
 
 <script>
+
 import Navbar from './Navbar.vue';
 import Camion from './Camion.vue';
 import Orden from './Orden.vue';
@@ -33,9 +34,8 @@ import OrdenPesajeFinal from './OrdenPesajeFinal.vue';
 import OrdenCargaDatos from './OrdenCargaDatos.vue';
 import OrdenCierre from './OrdenCierre.vue';
 import OrdenConciliacion from './OrdenConciliacion.vue';
-
-
-
+import AlertaAlarma from './AlertaAlarma.vue';
+import AlertaListaAlarmas from './AlertaListaAlarmas.vue';
 
 
 export default {
@@ -55,6 +55,8 @@ export default {
     OrdenCargaDatos,
     OrdenCierre,
     OrdenConciliacion,
+    AlertaAlarma,
+    AlertaListaAlarmas
 
   },
   data() {
