@@ -1,5 +1,5 @@
 <template>
-    Token Generated:<input id="input_token" type="text" v-model="token" v-if="!requestComplete" />
+    <input id="input_token" type="text" v-model="token" v-if="!requestComplete" />
     <button id="id_button_choferes" @click="getChoferes" v-if="!requestComplete">
         Get choferes
     </button>
