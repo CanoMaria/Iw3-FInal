@@ -15,7 +15,7 @@
         </table>
     </div>
 
-    <div class="container" v-if="requestCompleteOrdenesConciliacion">
+    <div class="container">
         <h1 class="text-center"> Lista de Ordenes</h1>
 
         <table class="table table-striped table-bordered">

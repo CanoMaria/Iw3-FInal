@@ -5,7 +5,7 @@
                 <td>Token Generated:</td>
                 <td><input id="input_token" type="text" v-model="token" /></td>
             </tr>
-
+            
             <tr>
                 <td>Fecha de recepción:</td>
                 <td><input type="date" v-model="nuevaOrden.fechaRecepcion" /></td>
@@ -25,9 +25,7 @@
 
             <tr>
                 <td>Cisternado del camión:</td>
-                <td><input type="number" v-model="nuevaOrden.camion.cisternado[0]" /></td>
-                <td><input type="number" v-model="nuevaOrden.camion.cisternado[1]" /></td>
-                <td><input type="number" v-model="nuevaOrden.camion.cisternado[2]" /></td>
+                <td><input type="text" v-model="nuevaOrden.camion.cisternado" /></td>
             </tr>
 
             <tr>
@@ -93,16 +91,7 @@
         </table>
     </div>
 
-    <div v-if="requestCompleteCrearOrdenes">
-        <div class="alert alert-success" role="alert">
-            <i class="fas fa-check-circle"></i> La petición se completó exitosamente
-        </div>
-    </div>
-    <div v-else>
-        <div class="alert alert-danger" role="alert">
-            <i class="fas fa-times-circle"></i> Status de la Request({{ errorStatus }})
-        </div>
-    </div>
+    <p v-if="requestCompleteCrearOrdenes">La petición se completó exitosamente</p>
 
 </template>
 
@@ -116,43 +105,44 @@ export default {
             token: '',
             requestCompleteCrearOrdenes: false,
             nuevaOrden: {
-                "fechaRecepcion": "",
+                "fechaRecepcion": "2022-11-18",
                 "cliente": {
-                    "razonSocial": "",
-                    "contacto": ""
+                    "razonSocial": "RazonSocialTest1",
+                    "contacto": "3517736362"
                 },
                 "camion": {
-                    "cisternado": [0, 0, 0],
-                    "descripcion": "",
-                    "patente": ""
+                    "cisternado": ["111", "222", "333"],
+                    "descripcion": "DescrCamionTest1",
+                    "patente": "CAM567041"
                 },
                 "chofer": {
-                    "apellido": "",
-                    "documento": '',
-                    "nombre": ""
+                    "apellido": "ApellidoChoferTest1",
+                    "documento": 37689712,
+                    "nombre": "NombreChoferTest1"
                 },
                 "alerta": {
-                    "mail": "[]",
-                    "temperaturaMax": ''
+                    "mail": "[ayecano98@gmail.com]",
+                    "temperaturaMax": "50"
                 },
                 "producto": {
-                    "descripcion": "",
-                    "nombre": ""
+                    "descripcion": "DescriProdTest1",
+                    "nombre": "NombreProdTest1"
                 },
-                "codigoExterno": ""
+                "codigoExterno": "900"
             }
+
+
         }
     },
     methods: {
         async createOrden() {
             try {
                 // Obtener un token llamando al método "getTokens" importado
-                console.log(this.nuevaOrden)
+
                 // Llamar al método "createOrden" del servicio de orden, pasando la nueva orden y el token como parámetros
                 this.nuevaOrden = await OrdenService.createOrden(this.nuevaOrden, this.token);
-
                 console.log('Orden creada correctamente:', this.nuevaOrden);
-
+                
                 this.requestCompleteCrearOrdenes = true;
             } catch (error) {
                 console.error(error);
