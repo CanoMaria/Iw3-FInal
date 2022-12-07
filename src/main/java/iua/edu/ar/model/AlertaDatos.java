@@ -42,7 +42,7 @@ public class AlertaDatos implements Serializable{
 	
 	@ApiModelProperty(notes = "Datos en caso de alerta", required = false)
 	@OneToOne(mappedBy="alertaDatos")
-	@JsonManagedReference
+	
 	private Orden orden;
 
 	public long getId() {
