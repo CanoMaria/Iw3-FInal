@@ -19,7 +19,18 @@
         </table>
     </div>
     
-    <p v-if="requestCompleteOrdenesPesajeInicial">La petición se completó exitosamente</p>
+    <div>
+    <div v-if="requestCompleteOrdenesPesajeInicial">
+      <div class="alert alert-success" role="alert">
+        <i class="fas fa-check-circle"></i> La petición se completó exitosamente
+      </div>
+    </div>
+    <div v-else>
+      <div class="alert alert-danger" role="alert">
+        <i class="fas fa-times-circle"></i> Status de la Request ({{ errorStatus }})
+      </div>
+    </div>
+  </div>
 
 </template>
 

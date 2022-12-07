@@ -18,6 +18,35 @@ class AlertaService {
     }
   }
 
+  async getAlertaList(id, token) {
+    try {
+
+      const response = await axios.get(ORDEN_API_BASE_URL + '/list/' + id, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+  
+  async acceptAlerta(id, token) {
+    try {
+
+      const response = await axios.get(ORDEN_API_BASE_URL + '/aceptar/' + id, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
 }
 
 

@@ -16,27 +16,16 @@
         <table class="table table-striped table-bordered">
             <thead>
                 <th>ID</th>
-                <!-- <th>Fecha Recepcion</th>
-                <th>Fecha Recepcion Pesaje Inicial</th>
-                <th>Fecha Fin de Carga</th> -->
-
                 <th>[Cliente]Razon social</th>
                 <th>[Cliente]Contacto</th>
-
                 <th>[Producto]Nombre</th>
-
                 <th>[Camion]Patente</th>
-
                 <th>[Camion]Cisternado</th>
-
                 <th>[Peso]Inicial</th>
                 <th>[Peso]Final</th>
-
                 <th>[Chofer]Nombre</th>
                 <th>[Chofer]Apellido</th>
                 <th>[Chofer]Documento</th>
-
-
                 <th>Estado de la orden</th>
 
 
@@ -44,27 +33,17 @@
             <tbody>
                 <tr v-for="orden in ordenes" v-bind:key="orden.id">
                     <td> {{ orden.id }} </td>
-                    <!-- <td> {{ orden.fechaRecepcion }} </td>
-                    <td> {{ orden.fechaRecepcionPesajeInicial }} </td>
-                    <td> {{ orden.fechaFinCarga }} </td> -->
 
                     <td> {{ orden.cliente.razonSocial }} </td>
                     <td> {{ orden.cliente.contacto }} </td>
-
-
                     <td> {{ orden.producto.nombre }} </td>
-
                     <td> {{ orden.camion.patente }} </td>
                     <td> {{ orden.camion.cisternado }} </td>
-
                     <td> {{ orden.pesoInicial }} </td>
                     <td> {{ orden.pesoFinal}} </td>
-
                     <td> {{ orden.chofer.nombre }} </td>
                     <td> {{ orden.chofer.apellido }} </td>
                     <td> {{ orden.chofer.documento }} </td>
-
-
                     <td> {{ orden.estado }} </td>
 
 

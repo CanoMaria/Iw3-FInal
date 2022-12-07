@@ -1,6 +1,6 @@
 <template>
   <form @submit.prevent="login" class="container" v-if="!requestComplete">
-    <table>
+    <table class="mx-auto">
       <tr>
         <td>Nombre de usuario:</td>
         <td><input type="text" v-model="username" /></td>
@@ -18,10 +18,13 @@
     </table>
   </form>
 
-
   <p v-if="error" class="error-message">{{ error }}</p>
   <!-- Añadir un <label> para mostrar el token -->
-  <label id="label_token" v-if="requestComplete">Token: {{ token }}</label>
+
+  <div class="alert alert-info" v-if="requestComplete" role="alert">
+    Este token debe usarse en cada request deseada.
+  </div>
+  <label id="label_token" v-if="requestComplete" class="token-label">Token: {{ token }}</label>
 </template>
 
 

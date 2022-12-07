@@ -4,7 +4,9 @@
 <template>
   <div id="app">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <a class="navbar-brand" href="#">Navbar</a>
+      <img src="https://thumbs.dreamstime.com/z/mundo-inform%C3%A1tico-logo-icon-design-127782525.jpg" width="40" height="40">
+
+      <a class="navbar-brand" href="https://github.com/CanoMaria/Iw3-FInal" style="color: black;">RepositorioIW3</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -150,7 +152,9 @@ export default {
 </script>
 
 <style>
-
+  .navbar a {
+    color: white;
+  }
 </style>
 
 

@@ -91,7 +91,16 @@
         </table>
     </div>
 
-    <p v-if="requestCompleteCrearOrdenes">La petición se completó exitosamente</p>
+    <div v-if="requestCompleteCrearOrdenes">
+        <div class="alert alert-success" role="alert">
+            <i class="fas fa-check-circle"></i> La petición se completó exitosamente
+        </div>
+    </div>
+    <div v-else>
+      <div class="alert alert-danger" role="alert">
+        <i class="fas fa-times-circle"></i> Status de la Request({{ errorStatus }})
+      </div>
+    </div>
 
 </template>
 
@@ -105,33 +114,31 @@ export default {
             token: '',
             requestCompleteCrearOrdenes: false,
             nuevaOrden: {
-                "fechaRecepcion": "2022-11-18",
+                "fechaRecepcion": "",
                 "cliente": {
-                    "razonSocial": "RazonSocialTest1",
-                    "contacto": "3517736362"
+                    "razonSocial": "",
+                    "contacto": ""
                 },
                 "camion": {
-                    "cisternado": ["111", "222", "333"],
-                    "descripcion": "DescrCamionTest1",
-                    "patente": "CAM567041"
+                    "cisternado": ["", "", ""],
+                    "descripcion": "",
+                    "patente": ""
                 },
                 "chofer": {
-                    "apellido": "ApellidoChoferTest1",
-                    "documento": 37689712,
-                    "nombre": "NombreChoferTest1"
+                    "apellido": "",
+                    "documento": "",
+                    "nombre": ""
                 },
                 "alerta": {
-                    "mail": "[ayecano98@gmail.com]",
-                    "temperaturaMax": "50"
+                    "mail": "[]",
+                    "temperaturaMax": ""
                 },
                 "producto": {
-                    "descripcion": "DescriProdTest1",
-                    "nombre": "NombreProdTest1"
+                    "descripcion": "",
+                    "nombre": ""
                 },
-                "codigoExterno": "900"
+                "codigoExterno": ""
             }
-
-
         }
     },
     methods: {
