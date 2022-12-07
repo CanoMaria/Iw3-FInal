@@ -49,7 +49,7 @@ import io.swagger.annotations.ApiModelProperty;
 )
 
 @JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
-@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class,property="id")
+@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class)
 public class Orden implements Serializable {
 
 	@Override
