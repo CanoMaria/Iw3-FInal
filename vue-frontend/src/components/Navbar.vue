@@ -113,7 +113,7 @@
               </a>
               <div class="dropdown-divider"></div>
               <a class="nav-link" href="#" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false"
-                @click="selectComponent('OrdenByEstado')">
+                @click="selectComponent('AlertaAceptadaAlarma')">
                 Aceptar Alarmas
               </a>
             </div>
@@ -155,6 +155,7 @@ import OrdenCierre from '@/components/OrdenCierre.vue';
 import OrdenConciliacion from '@/components/OrdenConciliacion.vue';
 import AlertaAlarma from '@/components/AlertaAlarma.vue';
 import AlertaListaAlarmas from '@/components/AlertaListaAlarmas.vue';
+import AlertaAceptadaAlarma from '@/components/AlertaAceptadaAlarma.vue';
 
 
 
@@ -166,7 +167,7 @@ export default {
       this.$emit("selectComponent", componentName);
     },
   },
-  components: { Login, Camion, Chofer, Orden, OrdenById, OrdenCreate, OrdenByEstado, OrdenPesajeInicial, OrdenPesajeFinal, Producto, OrdenCargaDatos, OrdenCierre, OrdenConciliacion, AlertaAlarma, AlertaListaAlarmas }
+  components: { Login, Camion, Chofer, Orden, OrdenById, OrdenCreate, OrdenByEstado, OrdenPesajeInicial, OrdenPesajeFinal, Producto, OrdenCargaDatos, OrdenCierre, OrdenConciliacion, AlertaAlarma, AlertaListaAlarmas, AlertaAceptadaAlarma }
 };
 
 </script>

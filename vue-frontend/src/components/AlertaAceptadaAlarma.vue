@@ -1,21 +1,24 @@
 <template>
-    <div class="container" v-if="!requestCompleteOrdenClosed">
+    <div class="container" v-if="!requestCompleteAcceptAlerta">
+        <div class="alert alert-info" role="alert">
+            Usar esta categoria de Requests una vez cargadas las temperaturas
+        </div>
         <table>
             <tr>
                 <td>Token Generated:</td>
                 <td><input id="input_token" type="text" v-model="token" /></td>
             </tr>
             <tr>
-                <td>ID Orden:</td>
-                <td><input type="text" v-model="id" /></td>
+                <td>ID:</td>
+                <td><input id="input_id" type="text" v-model="id" /></td>
             </tr>
             <tr>
-                <td><button @click="closeOrden">Cerrar Orden</button></td>
+                <td><button @click="acceptAlerta">Aceptar Alerta</button></td>
             </tr>
         </table>
     </div>
 
-    <div v-if="requestCompleteOrdenClosed">
+    <div v-if="requestCompleteAcceptAlerta">
         <div class="alert alert-success" role="alert">
             <i class="fas fa-check-circle"></i> La petición se completó exitosamente
         </div>
@@ -25,23 +28,23 @@
 </template>
 
 <script>
-import OrdenService from '@/services/OrdenService';
+import AlertaService from '@/services/AlertaService';
 
 export default {
     name: '',
     data() {
         return {
-            ordenes: [],
+            alertas: [],
             token: '',
-            requestCompleteOrdenClosed: false,
+            requestCompleteAcceptAlerta: false,
             id: '',
         }
     },
     methods: {
-        async closeOrden() {
+        async acceptAlerta() {
             try {
-                this.ordenes = await OrdenService.closeOrden(this.id, this.token)
-                this.requestCompleteOrdenClosed = true;
+                this.alertas = await AlertaService.acceptAlerta(this.id,this.token)
+                this.requestCompleteGetAlerta = true;
             } catch (error) {
                 console.error(error);
             }

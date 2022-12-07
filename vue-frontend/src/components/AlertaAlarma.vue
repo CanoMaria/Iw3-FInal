@@ -1,5 +1,8 @@
 <template>
     <div class="container" v-if="!requestCompleteGetAlerta">
+        <div class="alert alert-info" role="alert">
+            Usar esta categoria de Requests una vez cargadas las temperaturas
+        </div>
         <table>
             <tr>
                 <td>Token Generated:</td>
@@ -10,10 +13,11 @@
                 <td><input type="text" v-model="id" /></td>
             </tr>
             <tr>
-                <td><button @click="getAlerta">Submit</button></td>
+                <td><button @click="getAlerta">Mostrar Alerta</button></td>
             </tr>
         </table>
     </div>
+
 
     <div class="container">
         <h1 class="text-center"> Ultima Alarma </h1>
@@ -47,7 +51,6 @@ export default {
     name: '',
     data() {
         return {
-            alertas: [],
             token: '',
             requestCompleteGetAlerta: false,
             id: '',

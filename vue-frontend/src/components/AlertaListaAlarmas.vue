@@ -1,13 +1,19 @@
 <template>
     <div class="container" v-if="!requestCompleteGetAlerta">
+        <div class="alert alert-info" role="alert">
+            Usar esta categoria de Requests una vez cargadas las temperaturas
+        </div>
         <table>
             <tr>
                 <td>Token Generated:</td>
                 <td><input id="input_token" type="text" v-model="token" /></td>
             </tr>
-
             <tr>
-                <td><button @click="getAlertaList">Submit</button></td>
+                <td>ID:</td>
+                <td><input id="input_id" type="text" v-model="id" /></td>
+            </tr>
+            <tr>
+                <td><button @click="getAlertaList">Listar Alertas</button></td>
             </tr>
         </table>
     </div>
@@ -24,13 +30,13 @@
                 <th>Fecha de Aceptacion</th>
             </thead>
             <tbody>
-                <tr v-for="alarma in alarmas" v-bind:key="alarma.id">
+                <tr v-for="alerta in alertas" v-bind:key="alerta.id">
                     
-                    <td> {{ alarma.id }} </td>
-                    <td> {{ alarma.estado }} </td>
-                    <td> {{ alarma.usrAceptador }} </td>
-                    <td> {{ alarma.observaciones }} </td>
-                    <td> {{ alarma.fechaDeAceptacion }} </td>
+                    <td> {{ alerta.id }} </td>
+                    <td> {{ alerta.estado }} </td>
+                    <td> {{ alerta.usrAceptador }} </td>
+                    <td> {{ alerta.observaciones }} </td>
+                    <td> {{ alerta.fechaDeAceptacion }} </td>
                 </tr>
             </tbody>
         </table>
@@ -54,8 +60,7 @@ export default {
     methods: {
         async getAlertaList() {
             try {
-                this.alertas = await AlertaService.getAlertaList(this.token)
-
+                this.alertas = await AlertaService.getAlertaList(this.id,this.token)
                 this.requestCompleteGetAlerta = true;
             } catch (error) {
                 console.error(error);
