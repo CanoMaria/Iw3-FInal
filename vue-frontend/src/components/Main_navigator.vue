@@ -33,6 +33,10 @@ import OrdenPesajeFinal from './OrdenPesajeFinal.vue';
 import OrdenCargaDatos from './OrdenCargaDatos.vue';
 import OrdenCierre from './OrdenCierre.vue';
 import OrdenConciliacion from './OrdenConciliacion.vue';
+import AlertaAlarma from './AlertaAlarma.vue';
+
+
+
 
 
 
@@ -55,6 +59,7 @@ export default {
     OrdenCargaDatos,
     OrdenCierre,
     OrdenConciliacion,
+    AlertaAlarma
 
   },
   data() {

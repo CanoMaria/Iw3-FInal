@@ -92,6 +92,12 @@
               Producto
             </a>
           </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="#" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false"
+              @click="selectComponent('Producto')">
+              Alerta: Alarma
+            </a>
+          </li>
 
         </ul>
 
@@ -126,7 +132,8 @@ import OrdenPesajeInicial from '@/components/OrdenPesajeInicial.vue';
 import OrdenPesajeFinal from '@/components/OrdenPesajeFinal.vue';
 import OrdenCargaDatos from '@/components/OrdenCargaDatos.vue';
 import OrdenCierre from '@/components/OrdenCierre.vue';
-import OrdenConciliacion from '@/components/OrdenConciliacion.vue';
+import OrdenConciliacion from '@/components/OrdenConciliacion.vue';AlertaAlarma
+import AlertaAlarma from '@/components/AlertaAlarma.vue';
 
 
 export default {
@@ -137,7 +144,7 @@ export default {
       this.$emit("selectComponent", componentName);
     },
   },
-  components: { Login, Camion, Chofer, Orden, OrdenById, OrdenCreate, OrdenByEstado, OrdenPesajeInicial, OrdenPesajeFinal, Producto, OrdenCargaDatos, OrdenCierre, OrdenConciliacion }
+  components: { Login, Camion, Chofer, Orden, OrdenById, OrdenCreate, OrdenByEstado, OrdenPesajeInicial, OrdenPesajeFinal, Producto, OrdenCargaDatos, OrdenCierre, OrdenConciliacion, AlertaAlarma }
 };
 
 </script>
