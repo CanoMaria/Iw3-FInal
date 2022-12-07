@@ -13,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -41,6 +42,7 @@ public class AlertaDatos implements Serializable{
 	
 	@ApiModelProperty(notes = "Datos en caso de alerta", required = false)
 	@OneToOne(mappedBy="alertaDatos")
+	@JsonManagedReference
 	private Orden orden;
 
 	public long getId() {
