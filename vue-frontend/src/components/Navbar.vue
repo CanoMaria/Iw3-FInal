@@ -4,7 +4,8 @@
 <template>
   <div id="app">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <img src="https://thumbs.dreamstime.com/z/mundo-inform%C3%A1tico-logo-icon-design-127782525.jpg" width="40" height="40">
+      <img src="https://thumbs.dreamstime.com/z/mundo-inform%C3%A1tico-logo-icon-design-127782525.jpg" width="40"
+        height="40">
 
       <a class="navbar-brand" href="https://github.com/CanoMaria/Iw3-FInal" style="color: black;">RepositorioIW3</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -94,11 +95,28 @@
               Producto
             </a>
           </li>
-          <li class="nav-item active">
-            <a class="nav-link" href="#" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false"
-              @click="selectComponent('Producto')">
-              Alerta: Alarma
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false">
+              Alarma Requests
             </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="nav-link" href="#" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false"
+                @click="selectComponent('AlertaAlarma')">
+                Ultima Alarma
+              </a>
+              <div class="dropdown-divider"></div>
+              <a class="nav-link" href="#" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false"
+                @click="selectComponent('OrdenById')">
+                List Alarmas
+              </a>
+              <div class="dropdown-divider"></div>
+              <a class="nav-link" href="#" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false"
+                @click="selectComponent('OrdenByEstado')">
+                Accept Alarmas
+              </a>
+            </div>
           </li>
 
         </ul>
@@ -134,7 +152,7 @@ import OrdenPesajeInicial from '@/components/OrdenPesajeInicial.vue';
 import OrdenPesajeFinal from '@/components/OrdenPesajeFinal.vue';
 import OrdenCargaDatos from '@/components/OrdenCargaDatos.vue';
 import OrdenCierre from '@/components/OrdenCierre.vue';
-import OrdenConciliacion from '@/components/OrdenConciliacion.vue';AlertaAlarma
+import OrdenConciliacion from '@/components/OrdenConciliacion.vue'; AlertaAlarma
 import AlertaAlarma from '@/components/AlertaAlarma.vue';
 
 
@@ -152,9 +170,9 @@ export default {
 </script>
 
 <style>
-  .navbar a {
-    color: white;
-  }
+.navbar a {
+  color: white;
+}
 </style>
 
 

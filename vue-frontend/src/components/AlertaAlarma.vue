@@ -1,5 +1,5 @@
 <template>
-    <div class="container" v-if="!requestCompleteOrdenesConciliacion">
+    <div class="container" v-if="!requestCompleteGetAlerta">
         <table>
             <tr>
                 <td>Token Generated:</td>
@@ -10,35 +10,29 @@
                 <td><input type="text" v-model="id" /></td>
             </tr>
             <tr>
-                <td><button @click="conciliacionOrden">Conciliacion de Orden</button></td>
+                <td><button @click="getAlerta">Conciliacion de Orden</button></td>
             </tr>
         </table>
     </div>
 
     <div class="container">
-        <h1 class="text-center"> Lista de Ordenes</h1>
+        <h1 class="text-center"> Ultima Alarma </h1>
 
         <table class="table table-striped table-bordered">
             <thead>
-                <th>Peso Inicial</th>
-                <th>Peso Final</th>
-                <th>Producto Cargado</th>
-                <th>Neto por Balanza</th>
-                <th>Diferencia entre Balanza/Caudalimetro</th>
-                <th>Promedio Temperatura</th>
-                <th>Promedio Densidad</th>
-                <th>Promedio Caudal</th>
+                <th>ID Asociada</th>
+                <th>Estado</th>
+                <th>Aceptada por Usuario</th>
+                <th>Observaciones</th>
+                <th>Fecha de Aceptacion</th>
             </thead>
             <tbody>
                 <tr>
-                    <td> {{ pesoInicial }} </td>
-                    <td> {{ pesoFinal }} </td>
-                    <td> {{ productoCargado }} </td>
-                    <td> {{ netoPorBalanza }} </td>
-                    <td> {{ diferenciaEntreBalanzaCaudalímetro }} </td>
-                    <td> {{ promedioTemperatura }} </td>
-                    <td> {{ promedioDensidad }} </td>
-                    <td> {{ promedioCaudal }} </td>
+                    <td> {{ id }} </td>
+                    <td> {{ estado }} </td>
+                    <td> {{ usrAceptador }} </td>
+                    <td> {{ observaciones }} </td>
+                    <td> {{ fechaDeAceptacion }} </td>
                 </tr>
             </tbody>
         </table>
@@ -47,32 +41,28 @@
 </template>
 
 <script>
-import OrdenService from '@/services/OrdenService';
+import AlertaService from '@/services/AlertaService';
 
 export default {
     name: '',
     data() {
         return {
-            ordenes: [],
+            alertas: [],
             token: '',
-            requestCompleteOrdenesConciliacion: false,
+            requestCompleteGetAlerta: false,
             id: '',
-
         }
     },
     methods: {
-        async conciliacionOrden() {
+        async getAlerta() {
             try {
-                const result = await OrdenService.conciliacionOrden(this.id, this.token)
-                this.pesoInicial = result.pesoInicial;
-                this.pesoFinal = result.pesoFinal;
-                this.productoCargado = result.productoCargado;
-                this.netoPorBalanza = result.netoPorBalanza;
-                this.diferenciaEntreBalanzaCaudalímetro = result.diferenciaEntreBalanzaCaudalímetro;
-                this.promedioTemperatura = result.promedioTemperatura;
-                this.promedioDensidad = result.promedioDensidad;
-                this.promedioCaudal = result.promedioCaudal;
-                this.requestCompleteOrdenesConciliacion = true;
+                const result = await AlertaService.getAlerta(this.id, this.token)
+                this.id = result.id;
+                this.estado = result.estado;
+                this.usrAceptador = result.usrAceptador;
+                this.observaciones = result.observaciones;
+                this.fechaDeAceptacion = result.fechaDeAceptacion;
+                this.requestCompleteGetAlerta = true;
             } catch (error) {
                 console.error(error);
             }

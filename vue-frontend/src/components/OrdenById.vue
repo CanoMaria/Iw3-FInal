@@ -1,14 +1,13 @@
 <template>
 
     <div v-if="!requestCompleteOrdenesById">
-        Token Generated:<input id="input_token" type="text" v-model="token"  />
+        Token Generated:<input id="input_token" type="text" v-model="token" />
         Estado Search:<input id="input_id" type="text" v-model="id" />
 
         <button id="id_button_ordenes_by_id" @click="getOrdenesById">
             Search Orden by ID
         </button>
     </div>
-
 
     <div class="container" v-if="ordenes.length > 0">
         <h1 class="text-center"> Orden filtro de ID</h1>
@@ -27,26 +26,21 @@
                 <th>[Chofer]Apellido</th>
                 <th>[Chofer]Documento</th>
                 <th>Estado de la orden</th>
-
-
             </thead>
             <tbody>
                 <tr v-for="orden in ordenes" v-bind:key="orden.id">
                     <td> {{ orden.id }} </td>
-
                     <td> {{ orden.cliente.razonSocial }} </td>
                     <td> {{ orden.cliente.contacto }} </td>
                     <td> {{ orden.producto.nombre }} </td>
                     <td> {{ orden.camion.patente }} </td>
                     <td> {{ orden.camion.cisternado }} </td>
                     <td> {{ orden.pesoInicial }} </td>
-                    <td> {{ orden.pesoFinal}} </td>
+                    <td> {{ orden.pesoFinal }} </td>
                     <td> {{ orden.chofer.nombre }} </td>
                     <td> {{ orden.chofer.apellido }} </td>
                     <td> {{ orden.chofer.documento }} </td>
                     <td> {{ orden.estado }} </td>
-
-
                 </tr>
             </tbody>
         </table>
