@@ -36,6 +36,7 @@ import OrdenCierre from './OrdenCierre.vue';
 import OrdenConciliacion from './OrdenConciliacion.vue';
 import AlertaAlarma from './AlertaAlarma.vue';
 import AlertaListaAlarmas from './AlertaListaAlarmas.vue';
+import AlertaAcceptAlarma from './AlertaAcceptAlarma.vue';
 
 
 export default {
@@ -56,7 +57,8 @@ export default {
     OrdenCierre,
     OrdenConciliacion,
     AlertaAlarma,
-    AlertaListaAlarmas
+    AlertaListaAlarmas,
+    AlertaAcceptAlarma
 
   },
   data() {

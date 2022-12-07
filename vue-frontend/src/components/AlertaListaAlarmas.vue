@@ -5,7 +5,10 @@
                 <td>Token Generated:</td>
                 <td><input id="input_token" type="text" v-model="token" /></td>
             </tr>
-
+            <tr>
+                <td>ID Orden:</td>
+                <td><input type="text" v-model="id" /></td>
+            </tr>
             <tr>
                 <td><button @click="getAlertaList">Submit</button></td>
             </tr>
@@ -45,7 +48,7 @@ export default {
     name: '',
     data() {
         return {
-            alertas: [],
+            alarmas: [],
             token: '',
             requestCompleteGetAlerta: false,
             id: '',
@@ -54,7 +57,7 @@ export default {
     methods: {
         async getAlertaList() {
             try {
-                this.alertas = await AlertaService.getAlertaList(this.token)
+                this.alarmas = await AlertaService.getAlertaList(this.id,this.token)
 
                 this.requestCompleteGetAlerta = true;
             } catch (error) {

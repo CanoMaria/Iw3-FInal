@@ -307,7 +307,7 @@ public class OrdenBusiness implements IOrdenBusiness {
 		        Session session = Session.getInstance(properties, new javax.mail.Authenticator() {
 
 		            protected PasswordAuthentication getPasswordAuthentication() {
-		                return new PasswordAuthentication(from, "*******");
+		                return new PasswordAuthentication(from, "skipbeat");
 		            }
 
 		        });

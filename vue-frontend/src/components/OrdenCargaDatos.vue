@@ -7,7 +7,7 @@
             </tr>
             <tr>
                 <td>ID Orden:</td>
-                <td><input type="text" v-model="cargaDatos.id" /></td>
+                <td><input type="text" v-model="id" /></td>
             </tr>
             <tr>
                 <td>Masa acumulada:</td>
@@ -31,15 +31,11 @@
         </table>
     </div>
 
+
     <div v-if="requestCompleteOrdenCarga">
         <div class="alert alert-success" role="alert">
             <i class="fas fa-check-circle"></i> La petición se completó exitosamente
         </div>
-    </div>
-    <div v-else>
-      <div class="alert alert-danger" role="alert">
-        <i class="fas fa-times-circle"></i> Status de la Request({{ errorStatus }})
-      </div>
     </div>
 
 </template>
@@ -53,6 +49,7 @@ export default {
         return {
             ordenes: [],
             token: '',
+            orden:'',
             requestCompleteOrdenCarga: false,
             id: '',
             cargaDatos: {
@@ -60,22 +57,29 @@ export default {
                 "densidadProducto": 0.4,
                 "temperaturaProducto": 60.8,
                 "caudal": 14
-            }
+            },
+
 
         }
     },
     methods: {
         async addCargaDatos() {
             try {
-                this.ordenes = await OrdenService.addCargaDatos(this.cargaDatos.id, this.cargaDatos, this.token)
+                this.ordenes = await OrdenService.addCargaDatos(this.id, this.cargaDatos, this.token)
                 this.requestCompleteOrdenCarga = true;
+
             } catch (error) {
                 console.error(error);
             }
-        }
+        },
+
     },
+    // Llamar a la función getOrdenById cuando se cree el componente
+
 
 }
+
+
 
 </script>
 

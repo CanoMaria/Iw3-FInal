@@ -26,17 +26,17 @@ class AlertaService {
           'Authorization': `Bearer ${token}`
         }
       });
-
+      console.log(response.data)
       return response.data;
     } catch (error) {
       throw error;
     }
   }
   
-  async acceptAlerta(token) {
+  async acceptAlerta(id,cargaDatos,token) {
     try {
 
-      const response = await axios.get(ORDEN_API_BASE_URL + '/aceptar/' + id, {
+      const response = await axios.put(ORDEN_API_BASE_URL + '/aceptar/' + id, cargaDatos, {
         headers: {
           'Authorization': `Bearer ${token}`
         }

@@ -193,8 +193,8 @@ public class User implements UserDetails, Serializable {
 			return "CREDENTIALS_EXPIRED";
 		if (!isAccountNonExpired())
 			return "ACCOUNT_EXPIRED";
-		//if (!passwordEncoder.matches(password, getPassword()))
-			//return "BAD_PASSWORD";
+//		if (!passwordEncoder.matches(password, getPassword()))
+//			return "BAD_PASSWORD";
 		return null;
 	}
 	

@@ -1,0 +1,796 @@
+{
+	"info": {
+		"_postman_id": "415de6c0-ff7b-4c21-8bb8-8eb9a27d214f",
+		"name": "Ing.Web III - Final",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "12845674"
+	},
+	"item": [
+		{
+			"name": "Swagger",
+			"item": [
+				{
+					"name": "Swagger UI",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/swagger-ui/index.html",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"swagger-ui",
+								"index.html"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Token Management",
+			"item": [
+				{
+					"name": "Create Token",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\n    \"username\": \"nicolasbrambilla\",\n    \"password\": \"probandoclave\"\n\n}"
+						},
+						"url": {
+							"raw": "{{LOGIN_URL}}?username=nico&password=1234",
+							"host": [
+								"{{LOGIN_URL}}"
+							],
+							"query": [
+								{
+									"key": "username",
+									"value": "nico"
+								},
+								{
+									"key": "password",
+									"value": "1234"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login Json",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{LOGIN_URL}}/login-json?username=nico&password=1234",
+							"host": [
+								"{{LOGIN_URL}}"
+							],
+							"path": [
+								"login-json"
+							],
+							"query": [
+								{
+									"key": "username",
+									"value": "nico"
+								},
+								{
+									"key": "password",
+									"value": "1234"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Auth Info",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "cGNnTGRhK0NvbUc4T1B5V1hVMWk0UT09OjFsd1JSR1JWaU4vMkxNaTk5Uk0vbWc9PQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LOGIN_URL}}/auth-info",
+							"host": [
+								"{{LOGIN_URL}}"
+							],
+							"path": [
+								"auth-info"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Chofer",
+			"item": [
+				{
+					"name": "Listar todos los choferes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/camiones",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"camiones"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar Chofer por Id Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "cGNnTGRhK0NvbUc4T1B5V1hVMWk0UT09OjFsd1JSR1JWaU4vMkxNaTk5Uk0vbWc9PQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/choferes/5",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"choferes",
+								"5"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Producto",
+			"item": [
+				{
+					"name": "Listar todos los productos",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "YkpYekNiK3dxbWRXaEFhTG81Y3JoUT09OmdQSzVlRjd4R3NrSER5Z3RZWDRWeXc9PQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/productos",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"productos"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Camion",
+			"item": [
+				{
+					"name": "Listar todos los camiones",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "a0JLdEY3TDFsM3pyU0Ntb2JhNlhjdz09Oi83bzhXNWIzTGNMREpBbDlpMWVTRVE9PQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/camiones",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"camiones"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar Camion por Id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "cGNnTGRhK0NvbUc4T1B5V1hVMWk0UT09OjFsd1JSR1JWaU4vMkxNaTk5Uk0vbWc9PQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/camiones/5",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"camiones",
+								"5"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Orden",
+			"item": [
+				{
+					"name": "Crear Nueva Orden: >Estado 1",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const randomDni = _.random(2500000,70000000)",
+									"pm.environment.set(\"randomDni\",randomDni)",
+									"//Valores random para el cisternado MAX 100",
+									"pm.globals.set('randomNumberCisternaA', Math.floor(Math.random() * 100));",
+									"pm.globals.set('randomNumberCisternaB', Math.floor(Math.random() * 100));",
+									"pm.globals.set('randomNumberCisternaC', Math.floor(Math.random() * 100));",
+									"",
+									"pm.environment.set('randomNumberCisternaA', Math.floor(Math.random() * 100));",
+									"pm.environment.set('randomNumberCisternaB', Math.floor(Math.random() * 100));",
+									"pm.environment.set('randomNumberCisternaC', Math.floor(Math.random() * 100));"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"fechaRecepcion\": \"2022-11-18\",\n    \"cliente\": {\n        \"razonSocial\": \"{{$randomProduct}}\",\n        \"contacto\": \"{{$randomInt}}\"\n    },\n    \"camion\": {\n        \"cisternado\": [\"{{randomNumberCisternaA}}\",\"{{randomNumberCisternaB}}\",\"{{randomNumberCisternaC}}\"],\n        \"descipcion\": \"{{$randomJobDescriptor}}\",\n        \"patente\": \"{{$randomInt}}-{{$randomAbbreviation}}-{{$randomInt}}\"\n    },\n    \"chofer\": {\n        \"apellido\": \"{{$randomLastName}}\",\n        \"documento\": {{randomDni}},\n        \"nombre\": \"{{$randomFirstName}}\"\n    },\n    \"alertaDatos\": {\n        \"mail\": \"[ayecano98@gmail.com,nbrambilla024@alumnos.iua.edu.ar]\",\n        \"temperaturaMax\": 43\n    },\n    \"producto\": {\n        \"descipcion\": \"{{$randomProductAdjective}}\",\n        \"nombre\": \"{{$randomProductName}}\"\n    },\n    \"codigoExterno\": \"{{$randomInt}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/ordenes",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"ordenes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Ingresar Pesaje Inicial: >Estado 2 Pt1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\":1,\n    \"pesoInicial\": 1002\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/ordenes/pesaje-inicial",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"ordenes",
+								"pesaje-inicial"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Envio de Datos: >Estado 2 Pt2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"masaAcumulada\": 100,\n    \"densidadProducto\": 0.5,\n    \"temperaturaProducto\": 70,\n    \"caudal\":14\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/ordenes/carga-datos/8",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"ordenes",
+								"carga-datos",
+								"8"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cierre Orden: >Estado 3",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/ordenes/cierre-orden/8",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"ordenes",
+								"cierre-orden",
+								"8"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Ingresar Pesaje Final: >Estado 4",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": 8,\n    \"pesoFinal\": 3345\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/ordenes/pesaje-final",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"ordenes",
+								"pesaje-final"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Pedir Consiliacion: LastRequest",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/ordenes/conciliacion/8",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"ordenes",
+								"conciliacion",
+								"8"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar Orden por Id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/ordenes/1",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"ordenes",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar todas las ordenes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/ordenes",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"ordenes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar Orden",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\":1,\n    \"fechaRecepcion\": \"2022-05-21\",\n    \"cliente\": {\n        \"razonSocial\": \"{{$randomProduct}}\",\n        \"contacto\": \"{{$randomPhoneNumber}}\"\n    },\n    \"camion\": {\n        \"cisternado\": 2,\n        \"descipcion\": \"{{$randomJobDescriptor}}\",\n        \"patente\": \"{{$randomAlphaNumeric}}\"\n    },\n    \"chofer\": {\n        \"apellido\": \"{{$randomLastName}}\",\n        \"documento\": 41218596,\n        \"nombre\": \"{{$randomFirstName}}\"\n    },\n    \"producto\": {\n        \"descipcion\": \"{{$randomProductAdjective}}\",\n        \"nombre\": \"{{$randomProductName}}\"\n    },\n    \"codigoExterno\": \"{{$randomInt}}\",\n    \"preset\": 3345\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/ordenes",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"ordenes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Borrar Orden",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/ordenes/1",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"ordenes",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Verificar Password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": 1,\n    \"password\": \"54688\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/ordenes/check-password",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"ordenes",
+								"check-password"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Alarma",
+			"item": [
+				{
+					"name": "Ultima Alarma",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/alerta/1",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"alerta",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar Alarmas",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "Q2dvVHdqN0dCYThxMXpySG9Kakh1UT09OlhYcVo2dG4vQ1JxR0FsSndHU2pkdUE9PQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/alerta/list/1",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"alerta",
+								"list",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Aceptar Alarma",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"usrAceptador\": \"nico\",\n    \"observaciones\": \"{{$randomAdjective}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/alerta/aceptar/1",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"alerta",
+								"aceptar",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "RVBVK3o4SGJXVjNneGpVeDNUODNoQT09OjcxMWdYV29rWlhScVllYmdpVDVmQ0E9PQ",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"const randomDni = _.random(25000000,70000000)",
+					"pm.environment.set(\"randomDni\", randomDni )",
+					"",
+					"//Valores random para el cisternado MAX 100",
+					"pm.globals.set('randomNumberCisternaA', Math.floor(Math.random() * 100));",
+					"pm.globals.set('randomNumberCisternaB', Math.floor(Math.random() * 100));",
+					"pm.globals.set('randomNumberCisternaC', Math.floor(Math.random() * 100));",
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"pm.test(\"Status code is 201\", function () {",
+					"    pm.response.to.have.status(201);",
+					"});"
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "BASE_URL",
+			"value": "localhost:8080/api/vi"
+		}
+	]
+}
