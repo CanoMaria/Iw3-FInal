@@ -11,7 +11,10 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -45,6 +48,8 @@ import io.swagger.annotations.ApiModelProperty;
         }
 )
 
+@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
+@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class,property="id")
 public class Orden implements Serializable {
 
 	@Override
