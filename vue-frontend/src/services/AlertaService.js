@@ -33,7 +33,7 @@ class AlertaService {
     }
   }
   
-  async acceptAlerta(id, token) {
+  async acceptAlerta(token) {
     try {
 
       const response = await axios.get(ORDEN_API_BASE_URL + '/aceptar/' + id, {

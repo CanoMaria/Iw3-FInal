@@ -5,7 +5,7 @@
                 <td>Token Generated:</td>
                 <td><input id="input_token" type="text" v-model="token" /></td>
             </tr>
-            
+
             <tr>
                 <td>Fecha de recepción:</td>
                 <td><input type="date" v-model="nuevaOrden.fechaRecepcion" /></td>
@@ -25,7 +25,9 @@
 
             <tr>
                 <td>Cisternado del camión:</td>
-                <td><input type="text" v-model="nuevaOrden.camion.cisternado" /></td>
+                <td><input type="number" v-model="nuevaOrden.camion.cisternado[0]" /></td>
+                <td><input type="number" v-model="nuevaOrden.camion.cisternado[1]" /></td>
+                <td><input type="number" v-model="nuevaOrden.camion.cisternado[2]" /></td>
             </tr>
 
             <tr>
@@ -97,9 +99,9 @@
         </div>
     </div>
     <div v-else>
-      <div class="alert alert-danger" role="alert">
-        <i class="fas fa-times-circle"></i> Status de la Request({{ errorStatus }})
-      </div>
+        <div class="alert alert-danger" role="alert">
+            <i class="fas fa-times-circle"></i> Status de la Request({{ errorStatus }})
+        </div>
     </div>
 
 </template>
@@ -120,18 +122,18 @@ export default {
                     "contacto": ""
                 },
                 "camion": {
-                    "cisternado": ["", "", ""],
+                    "cisternado": [0, 0, 0],
                     "descripcion": "",
                     "patente": ""
                 },
                 "chofer": {
                     "apellido": "",
-                    "documento": "",
+                    "documento": '',
                     "nombre": ""
                 },
                 "alerta": {
                     "mail": "[]",
-                    "temperaturaMax": ""
+                    "temperaturaMax": ''
                 },
                 "producto": {
                     "descripcion": "",
@@ -145,11 +147,12 @@ export default {
         async createOrden() {
             try {
                 // Obtener un token llamando al método "getTokens" importado
-
+                console.log(this.nuevaOrden)
                 // Llamar al método "createOrden" del servicio de orden, pasando la nueva orden y el token como parámetros
                 this.nuevaOrden = await OrdenService.createOrden(this.nuevaOrden, this.token);
+
                 console.log('Orden creada correctamente:', this.nuevaOrden);
-                
+
                 this.requestCompleteCrearOrdenes = true;
             } catch (error) {
                 console.error(error);

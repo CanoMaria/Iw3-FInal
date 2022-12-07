@@ -5,18 +5,15 @@
                 <td>Token Generated:</td>
                 <td><input id="input_token" type="text" v-model="token" /></td>
             </tr>
+
             <tr>
-                <td>ID Orden:</td>
-                <td><input type="text" v-model="id" /></td>
-            </tr>
-            <tr>
-                <td><button @click="getAlerta">Submit</button></td>
+                <td><button @click="getAlertaList">Submit</button></td>
             </tr>
         </table>
     </div>
 
     <div class="container">
-        <h1 class="text-center"> Ultima Alarma </h1>
+        <h1 class="text-center"> Lista de Alarmas </h1>
 
         <table class="table table-striped table-bordered">
             <thead>
@@ -27,12 +24,13 @@
                 <th>Fecha de Aceptacion</th>
             </thead>
             <tbody>
-                <tr>
-                    <td> {{ id }} </td>
-                    <td> {{ estado }} </td>
-                    <td> {{ usrAceptador }} </td>
-                    <td> {{ observaciones }} </td>
-                    <td> {{ fechaDeAceptacion }} </td>
+                <tr v-for="alarma in alarmas" v-bind:key="alarma.id">
+                    
+                    <td> {{ alarma.id }} </td>
+                    <td> {{ alarma.estado }} </td>
+                    <td> {{ alarma.usrAceptador }} </td>
+                    <td> {{ alarma.observaciones }} </td>
+                    <td> {{ alarma.fechaDeAceptacion }} </td>
                 </tr>
             </tbody>
         </table>
@@ -54,14 +52,10 @@ export default {
         }
     },
     methods: {
-        async getAlerta() {
+        async getAlertaList() {
             try {
-                const result = await AlertaService.getAlerta(this.id, this.token)
-                this.id = result.id;
-                this.estado = result.estado;
-                this.usrAceptador = result.usrAceptador;
-                this.observaciones = result.observaciones;
-                this.fechaDeAceptacion = result.fechaDeAceptacion;
+                this.alertas = await AlertaService.getAlertaList(this.token)
+
                 this.requestCompleteGetAlerta = true;
             } catch (error) {
                 console.error(error);
