@@ -105,8 +105,11 @@
 <script>
 import OrdenService from '@/services/OrdenService';
 
+
 export default {
     name: '',
+    components: {
+  },
     data() {
         return {
             token: '',
@@ -142,6 +145,9 @@ export default {
     methods: {
         async createOrden() {
             try {
+                
+                
+                
                 // Obtener un token llamando al método "getTokens" importado
                 console.log(this.nuevaOrden)
                 // Llamar al método "createOrden" del servicio de orden, pasando la nueva orden y el token como parámetros
